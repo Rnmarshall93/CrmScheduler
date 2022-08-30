@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import model.Appointment;
 import model.User;
 
+import java.net.URL;
 import java.time.ZoneId;
 
 /**
@@ -136,7 +137,8 @@ public class LoginFormController {
                     alert.setTitle("Approaching appointment warning");
                     alert.showAndWait();
                 }
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ManagementForm.fxml"));
+
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
                 Parent managementWindow = fxmlLoader.load();
                 Scene ModifyPartScene = new Scene(managementWindow);
                 Stage window = (Stage) inputUsername.getScene().getWindow();

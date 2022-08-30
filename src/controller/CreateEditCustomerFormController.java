@@ -164,7 +164,7 @@ public class CreateEditCustomerFormController {
     private void returnToManagementForm() {
         try {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ManagementForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
             Scene ModifyPartScene = new Scene(managementWindow);
             Stage window = (Stage) inputCustomerId.getScene().getWindow();

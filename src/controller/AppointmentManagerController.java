@@ -265,7 +265,7 @@ public class AppointmentManagerController {
      * Opens the CreatedEditAppointmentForm with all blank values to allow the user to create a new appointment. populates the contacts and fills out the userID. Event handler for the new appointment button.
      */
     public void createNewAppointment() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/CreateEditAppointmentForm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/CreateEditAppointmentForm.fxml"));
         try {
             Parent appointmentManagerWindow = fxmlLoader.load();
             Scene addEditAppointmentScene = new Scene(appointmentManagerWindow);
@@ -302,7 +302,7 @@ public class AppointmentManagerController {
         try
         {
             if (selectedAppointment != null) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/CreateEditAppointmentForm.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/CreateEditAppointmentForm.fxml"));
                 Parent appointmentManagerWindow = fxmlLoader.load();
                 Scene addEditAppointmentScene = new Scene(appointmentManagerWindow);
                 Stage window = (Stage) buttonNewAppointment.getScene().getWindow();
@@ -383,7 +383,7 @@ public class AppointmentManagerController {
         try
         {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ManagementForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
             Scene ModifyPartScene = new Scene(managementWindow);
             Stage window = (Stage) buttonNewAppointment.getScene().getWindow();
@@ -406,7 +406,7 @@ public class AppointmentManagerController {
     public void viewReportsWindow() {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ReportsForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ReportsForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
             Scene ModifyPartScene = new Scene(managementWindow);
             Stage window = (Stage) buttonNewAppointment.getScene().getWindow();

@@ -254,7 +254,7 @@ public class CreateEditAppointmentController {
     private void returnToAppointmentForm() {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AppointmentManagerForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/AppointmentManagerForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
             Scene ModifyPartScene = new Scene(managementWindow);
             Stage window = (Stage) inputType.getScene().getWindow();

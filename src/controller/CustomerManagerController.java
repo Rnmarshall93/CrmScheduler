@@ -196,7 +196,7 @@ public class CustomerManagerController {
     public void createNewCustomer() {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/CreateEditCustomerForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/CreateEditCustomerForm.fxml"));
             Parent addEditCustomerWindow = fxmlLoader.load();
             Scene addEditCustomerScene = new Scene(addEditCustomerWindow);
             Stage window = (Stage) buttonNewCustomer.getScene().getWindow();
@@ -223,7 +223,7 @@ public class CustomerManagerController {
         {
             Customer customer = (Customer) tableCustomers.getSelectionModel().getSelectedItem();
             if (customer != null) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/CreateEditCustomerForm.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/CreateEditCustomerForm.fxml"));
                 Parent addEditCustomerWindow = fxmlLoader.load();
                 Scene addEditCustomerScene = new Scene(addEditCustomerWindow);
                 Stage window = (Stage) buttonNewCustomer.getScene().getWindow();
@@ -282,7 +282,7 @@ public class CustomerManagerController {
     public void openAppointmentWindow () {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AppointmentManagerForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/AppointmentManagerForm.fxml"));
             Parent appointmentManagerWindow = fxmlLoader.load();
             Scene appointmentManagerScene = new Scene(appointmentManagerWindow);
             Stage window = (Stage) buttonNewCustomer.getScene().getWindow();

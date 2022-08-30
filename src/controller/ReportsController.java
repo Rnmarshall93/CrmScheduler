@@ -285,7 +285,7 @@ public class ReportsController {
      */
     public void returnToCustomerManager() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/ManagementForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
             Scene ModifyPartScene = new Scene(managementWindow);
             Stage window = (Stage) textAreaStats.getScene().getWindow();
@@ -306,7 +306,7 @@ public class ReportsController {
     public void returnToAppointmentManager() {
         try
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/AppointmentManagerForm.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/AppointmentManagerForm.fxml"));
             Parent appointmentManagerWindow = fxmlLoader.load();
             Scene appointmentManagerScene = new Scene(appointmentManagerWindow);
             Stage window = (Stage) textAreaMonthAndType.getScene().getWindow();

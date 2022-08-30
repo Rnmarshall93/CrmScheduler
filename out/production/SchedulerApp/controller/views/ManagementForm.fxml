@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane fx:id="anchorManagementForm" maxHeight="453.0" maxWidth="1200.0" minHeight="289.0" minWidth="950.0" onKeyTyped="#filterCustomers" prefHeight="289.0" prefWidth="1082.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerManagerController">
+    <children>
+      <TextField fx:id="textboxFilterCustomers" layoutX="147.0" layoutY="16.0" onKeyTyped="#filterCustomers" />
+        <TableView fx:id="tableCustomers" editable="true" focusTraversable="false" layoutX="20.0" layoutY="45.0" minHeight="200.0" minWidth="800.0" prefHeight="200.0" prefWidth="1019.0">
+            <columns>
+                <TableColumn fx:id="columnCustomerId" prefWidth="75.0" text="Customer ID" />
+                <TableColumn fx:id="columnName" prefWidth="106.0" text="Name" />
+                <TableColumn fx:id="columnAddress" prefWidth="92.0" text="Address" />
+                <TableColumn fx:id="columnPostalCode" prefWidth="77.0" text="Postal Code" />
+                <TableColumn fx:id="columnPhone" prefWidth="100.0" text="Phone" />
+                <TableColumn fx:id="columnCreated" minWidth="0.0" prefWidth="98.0" text="Created" />
+                <TableColumn fx:id="columnCreatedBy" minWidth="0.0" prefWidth="75.0" text="Created by" />
+                <TableColumn fx:id="columnLastUpdated" prefWidth="85.0" text="Last Updated" />
+                <TableColumn fx:id="columnLastUpdatedBy" prefWidth="107.0" text="Last Updated by" />
+                <TableColumn fx:id="columnDivisionId" prefWidth="74.0" text="Division ID" />
+                <TableColumn fx:id="columnDivision" minWidth="0.0" prefWidth="129.0" text="Division" />
+            </columns>
+        </TableView>
+        <Button fx:id="buttonNewCustomer" layoutX="20.0" layoutY="254.0" mnemonicParsing="false" onAction="#createNewCustomer" text="New Customer" />
+        <Button layoutX="121.0" layoutY="254.0" mnemonicParsing="false" onAction="#editCustomer" text="Edit Customer" />
+        <Button layoutX="221.0" layoutY="254.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete Customer" />
+        <Button layoutX="647.0" layoutY="254.0" mnemonicParsing="false" onAction="#openAppointmentWindow" prefHeight="25.0" prefWidth="147.0" text="Manage Appointments" />
+        <Label fx:id="labelImpendingAppointment" layoutX="747.0" layoutY="20.0" text="PLACEHOLDER LABEL FOR IMPENDING APPOINTMENT" />
+      <Label layoutX="14.0" layoutY="20.0" text="Filter Customer by name:" />
+    </children>
+</AnchorPane>
