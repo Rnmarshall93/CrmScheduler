@@ -118,8 +118,7 @@ public class Appointment {
             {
                 if(end.getHour() == 22)
                 {
-                    if(end.getMinute() != 0 || end.getSecond() != 0)
-                        return false;
+                    return end.getMinute() == 0 && end.getSecond() == 0;
                 }
                 return true;
             }

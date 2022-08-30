@@ -38,7 +38,7 @@ public class ImpendingAppointmentSingleton {
     /**
      * this class is a singleton, so the constructor is private so it can never be implemented as a new object.
      */
-  private ImpendingAppointmentSingleton(){};
+  private ImpendingAppointmentSingleton(){}
 
     /**
      * Sets up the instance of this class if it doesn't exist. If it does, returns the already existing instance.

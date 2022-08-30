@@ -163,7 +163,7 @@ public class AppointmentDaoImplSql implements IAppointmentDao {
             String query = "update appointments set Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Create_Date = ?," +
                     " Created_By = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? " +
                     "where Appointment_ID = ?";
-            PreparedStatement preparedStatement = dbConn.prepareStatement(query);;
+            PreparedStatement preparedStatement = dbConn.prepareStatement(query);
             preparedStatement.setString(1, newAppointment.getTitle());
             preparedStatement.setString(2, newAppointment.getDescription());
             preparedStatement.setString(3, newAppointment.getLocation());

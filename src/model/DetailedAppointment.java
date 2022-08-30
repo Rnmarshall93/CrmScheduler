@@ -4,11 +4,12 @@ import DAO.IContactsDao;
 import DAO.IContactsDaoImplSql;
 import Utilities.TimeTools;
 import javafx.collections.ObservableList;
+import main.java.controller.AppointmentManagerController;
 
 /**
  * Extended version of the Appointment model. Allows for keeping the contact's name without knowing anything else about the contact. Useful for filtering lists using labmdas and
  * displaying information in a table. This class also maps 1:1 to the table used in AppointmentManagerController.
- * @see controller.AppointmentManagerController#buildTable(ObservableList)
+ * @see AppointmentManagerController#buildTable(ObservableList)
  */
 public class DetailedAppointment extends Appointment {
 

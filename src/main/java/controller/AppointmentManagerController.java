@@ -1,7 +1,7 @@
 package controller;
 
 
-import DAO.*;
+import main.java.DAO.*;
 import Utilities.ImpendingAppointmentSingleton;
 import Utilities.TimeTools;
 import javafx.collections.FXCollections;
@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.*;
+import main.java.model.*;
 
 import java.sql.Timestamp;
 import java.time.Instant;
