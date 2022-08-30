@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane cacheShape="false" centerShape="false" maxHeight="200.0" maxWidth="350.0" minHeight="200.0" minWidth="350.0"
+            prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
+    <children>
+        <Button fx:id="buttonLogin" defaultButton="true" layoutX="68.0" layoutY="156.0" mnemonicParsing="false"
+                onAction="#Login" prefHeight="25.0" prefWidth="205.0" text="Login text placeholder"/>
+        <TextField fx:id="inputUsername" layoutX="138.0" layoutY="81.0"/>
+        <Label fx:id="labelUsername" layoutX="7.0" layoutY="85.0" text="Username placeholder"/>
+        <TextField fx:id="inputPassword" layoutX="138.0" layoutY="115.0"/>
+        <Label fx:id="labelPassword" layoutX="10.0" layoutY="119.0" text="Password placeholder"/>
+        <Label fx:id="labelZoneId" layoutX="8.0" layoutY="6.0" prefHeight="71.0" prefWidth="332.0"
+               text="PLACEHOLDER TEXT">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Label>
+    </children>
+</AnchorPane>

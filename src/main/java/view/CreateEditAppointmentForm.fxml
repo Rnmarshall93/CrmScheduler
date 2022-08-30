@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="451.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateEditAppointmentController">
+    <children>
+        <TextField fx:id="inputAppointmentId" disable="true" layoutX="116.0" layoutY="65.0" text="Auto generated" />
+        <TextField fx:id="inputTitle" layoutX="116.0" layoutY="100.0" />
+        <TextField fx:id="inputDescription" layoutX="116.0" layoutY="134.0" />
+        <TextField fx:id="inputLocation" layoutX="116.0" layoutY="169.0" />
+        <ComboBox fx:id="comboContact" layoutX="116.0" layoutY="204.0" onAction="#contactSelected" prefWidth="150.0" />
+        <TextField fx:id="inputType" layoutX="116.0" layoutY="240.0" />
+        <TextField fx:id="inputStart" layoutX="116.0" layoutY="277.0" promptText="2022-12-1 10:30:00" />
+        <TextField fx:id="inputEnd" layoutX="116.0" layoutY="312.0" promptText="2022-12-1 11:30:00" />
+        <ComboBox fx:id="comboCustomerIds" layoutX="116.0" layoutY="347.0" prefWidth="150.0" />
+        <TextField fx:id="inputUserId" disable="true" editable="false" layoutX="116.0" layoutY="384.0" />
+        <Button fx:id="buttonTest" layoutX="67.0" layoutY="412.0" mnemonicParsing="false" onAction="#saveAppointment" text="Save" />
+        <Button layoutX="214.0" layoutY="412.0" mnemonicParsing="false" onAction="#discardAppointment" text="Cancel" />
+        <Label layoutX="28.0" layoutY="69.0" text="Appointment ID" />
+        <Label layoutX="90.0" layoutY="104.0" text="Title" />
+        <Label layoutX="51.0" layoutY="135.0" text="Description" />
+        <Label layoutX="67.0" layoutY="173.0" text="Location" />
+        <Label layoutX="69.0" layoutY="208.0" text="Doctor" />
+        <Label layoutX="84.0" layoutY="244.0" text="Type" />
+        <Label layoutX="58.0" layoutY="277.0" prefHeight="25.0" prefWidth="64.0" text="Start Date" />
+        <Label layoutX="57.0" layoutY="316.0" text="End Date" />
+        <Label layoutX="40.0" layoutY="351.0" text="Customer ID" />
+        <Label layoutX="68.0" layoutY="390.0" text="User ID" />
+    </children>
+</AnchorPane>
