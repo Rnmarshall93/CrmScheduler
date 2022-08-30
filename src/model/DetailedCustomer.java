@@ -1,7 +1,7 @@
 package model;
 
-import DAO.IFirstLevelDivisionsDao;
 import DAO.FirstLevelDivisionsDaoImplSql;
+import DAO.IFirstLevelDivisionsDao;
 import Utilities.TimeTools;
 import javafx.collections.ObservableList;
 

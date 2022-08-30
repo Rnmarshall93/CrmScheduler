@@ -1,8 +1,6 @@
 package model;
 
 
-import Utilities.LanguageSettings;
-
 import java.sql.Date;
 
 /**

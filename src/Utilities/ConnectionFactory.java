@@ -3,13 +3,10 @@ package Utilities;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Properties;
 
 /**

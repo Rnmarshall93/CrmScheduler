@@ -1,9 +1,7 @@
 package model;
 
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * The model class for a Customer.

@@ -4,7 +4,7 @@ import DAO.IContactsDao;
 import DAO.IContactsDaoImplSql;
 import Utilities.TimeTools;
 import javafx.collections.ObservableList;
-import main.java.controller.AppointmentManagerController;
+import controller.AppointmentManagerController;
 
 /**
  * Extended version of the Appointment model. Allows for keeping the contact's name without knowing anything else about the contact. Useful for filtering lists using labmdas and

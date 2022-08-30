@@ -12,11 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Country;
 import model.Customer;
-
-import javafx.scene.control.TextField;
 import model.FirstLevelDivision;
 import model.User;
 
@@ -139,9 +138,7 @@ public class CreateEditCustomerFormController {
      */
     private boolean creatingNewCustomer()
     {
-        if(inputCustomerId.getText().matches("\\d+"))
-            return true;
-        return false;
+        return inputCustomerId.getText().matches("\\d+");
     }
 
 

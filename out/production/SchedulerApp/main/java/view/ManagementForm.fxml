@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
 <AnchorPane fx:id="anchorManagementForm" maxHeight="453.0" maxWidth="1200.0" minHeight="289.0" minWidth="950.0" onKeyTyped="#filterCustomers" prefHeight="289.0" prefWidth="1082.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerManagerController">
     <children>
       <TextField fx:id="textboxFilterCustomers" layoutX="147.0" layoutY="16.0" onKeyTyped="#filterCustomers" />

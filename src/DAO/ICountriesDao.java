@@ -1,6 +1,5 @@
 package DAO;
 
-import model.Contact;
 import model.Country;
 
 import java.util.ArrayList;

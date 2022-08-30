@@ -1,15 +1,20 @@
 package controller;
 
 
-import DAO.*;
-import Utilities.*;
+import DAO.AppointmentDaoImplSql;
+import DAO.IAppointmentDao;
+import DAO.IUserDao;
+import DAO.UsersDaoImplSql;
+import Utilities.ImpendingAppointmentSingleton;
+import Utilities.LoginAuditor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.*;
+import model.Appointment;
+import model.User;
 
 import java.time.ZoneId;
 
@@ -50,9 +55,7 @@ public class LoginFormController {
      */
     private boolean isFormInputValid()
     {
-        if(inputUsername.getText().length() > 0 && inputPassword.getLength() > 0)
-            return true;
-        return false;
+        return inputUsername.getText().length() > 0 && inputPassword.getLength() > 0;
     }
 
     /**
@@ -60,7 +63,7 @@ public class LoginFormController {
      */
     private void handleBadInput()
     {
-        String languageSetting = LanguageSettings.getInstance().getSystemLanguage();
+        String languageSetting = Utilities.LanguageSettings.getInstance().getSystemLanguage();
         String alertTitle = "";
         String alertMessage = "";
         if(languageSetting == "english")
@@ -84,7 +87,7 @@ public class LoginFormController {
      */
     @FXML
     public void initialize() {
-        LanguageSettings languageSettings = LanguageSettings.getInstance();
+        Utilities.LanguageSettings languageSettings = Utilities.LanguageSettings.getInstance();
         ZoneId zoneId = ZoneId.systemDefault();
 
         //setup the controls based on whether or not the user's language is english or french

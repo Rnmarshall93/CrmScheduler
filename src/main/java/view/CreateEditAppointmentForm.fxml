@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
 <AnchorPane prefHeight="451.0" prefWidth="323.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateEditAppointmentController">
     <children>
         <TextField fx:id="inputAppointmentId" disable="true" layoutX="116.0" layoutY="65.0" text="Auto generated" />

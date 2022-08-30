@@ -63,3 +63,6 @@ User attempted login : test / Date: 2022-07-03 09:38:07.8032718 (UTC) / was succ
 User attempted login : test / Date: 2022-07-05 14:19:23.3108039 (UTC) / was successful? : true
 User attempted login : test / Date: 2022-08-30 09:38:19.8568036 (UTC) / was successful? : true
 User attempted login : test / Date: 2022-08-30 09:38:37.1356384 (UTC) / was successful? : true
+User attempted login : test / Date: 2022-08-30 09:42:58.6664843 (UTC) / was successful? : true
+User attempted login : test / Date: 2022-08-30 09:47:01.48247 (UTC) / was successful? : true
+User attempted login : test / Date: 2022-08-30 09:59:20.1962011 (UTC) / was successful? : true

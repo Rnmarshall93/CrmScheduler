@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.AnchorPane?>
 <AnchorPane minHeight="350.0" minWidth="300.0" prefHeight="357.0" prefWidth="314.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateEditCustomerFormController">
     <children>
         <TextField fx:id="inputCustomerId" disable="true" layoutX="105.0" layoutY="21.0" text="Auto generated" />

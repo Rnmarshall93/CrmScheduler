@@ -1,7 +1,10 @@
 package controller;
 
 
-import main.java.DAO.*;
+import DAO.AppointmentDaoImplSql;
+import DAO.IAppointmentDao;
+import DAO.IContactsDao;
+import DAO.IContactsDaoImplSql;
 import Utilities.ImpendingAppointmentSingleton;
 import Utilities.TimeTools;
 import javafx.collections.FXCollections;
@@ -13,7 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import main.java.model.*;
+import model.Appointment;
+import model.Contact;
+import model.DetailedAppointment;
+import model.User;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -104,7 +110,6 @@ public class AppointmentManagerController {
 
     public TextField textboxFilterAppointments;
     private User loggedInUser;
-
     /**
      * getter for the loggedInUser
      * @return the logged in user

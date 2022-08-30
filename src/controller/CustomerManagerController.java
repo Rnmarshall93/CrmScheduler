@@ -1,6 +1,9 @@
 package controller;
 
-import DAO.*;
+import DAO.AppointmentDaoImplSql;
+import DAO.IAppointmentDao;
+import DAO.ICustomerDao;
+import DAO.ICustomerDaoImplSql;
 import Utilities.ImpendingAppointmentSingleton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.*;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

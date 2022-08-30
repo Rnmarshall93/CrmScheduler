@@ -1,7 +1,10 @@
 package controller;
 
 
-import DAO.*;
+import DAO.AppointmentDaoImplSql;
+import DAO.IAppointmentDao;
+import DAO.IContactsDao;
+import DAO.IContactsDaoImplSql;
 import Utilities.TimeTools;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,13 +15,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.*;
+import model.Appointment;
+import model.DetailedAppointment;
+import model.User;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 /**
