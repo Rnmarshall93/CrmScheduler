@@ -129,6 +129,13 @@ public class UsersDaoImplSql implements IUserDao {
      */
     @Override
     public void updateUser(int userToUpdateID, CrmUser updatedUser) {
+        Session session = HibernateConf.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        session.update(updatedUser);
+
+        session.getTransaction().commit();
+        session.close();
             }
 
     /**
