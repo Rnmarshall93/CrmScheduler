@@ -106,8 +106,19 @@ public class UsersDaoImplSql implements IUserDao {
      */
     @Override
     public ArrayList<CrmUser> getAllUsers() {
-        //todo implement in hibernate
-        return null;
+
+        Session session = HibernateConf.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query q = session.createQuery("FROM CrmUser");
+        ArrayList<CrmUser> allUsers = new ArrayList<>();
+        allUsers.addAll(q.list());
+
+        session.getTransaction().commit();
+        session.close();
+
+        return allUsers;
+
     }
 
     /**

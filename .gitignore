@@ -21,3 +21,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#ignore secrets file
+secrets*
+
+#ignore targets
+target/
+
+#Misc ignores
+.ds_Store
+.idea/
+login_activity.txt
