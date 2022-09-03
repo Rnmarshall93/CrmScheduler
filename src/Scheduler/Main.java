@@ -1,6 +1,4 @@
-package Scheduler;
-
-import Utilities.LanguageSettings;
+import com.CrmScheduler.HelperUtilties.LanguageSettings;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

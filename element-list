@@ -1,5 +1,5 @@
-controller
-DAO
+com.CrmScheduler.controller
+com.CrmScheduler.DAO
 model
 Scheduler
 Utilities
