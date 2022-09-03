@@ -145,7 +145,12 @@ public class UsersDaoImplSql implements IUserDao {
      */
     @Override
     public void deleteUser(int foundUserID) {
-        //todo implement in hibernate
+        Session session = HibernateConf.getSessionFactory().openSession();
+        session.beginTransaction();
 
+        session.delete(foundUserID);
+
+        session.getTransaction().commit();
+        session.close();
         }
 }
