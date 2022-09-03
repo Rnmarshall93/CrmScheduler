@@ -25,7 +25,13 @@ public class UsersDaoImplSql implements IUserDao {
      */
     @Override
     public void addUser(CrmUser newUser) {
-        //todo implement in hibernate
+        Session session = HibernateConf.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        session.save(newUser);
+
+        session.getTransaction().commit();
+        session.close();
     }
 
     /**
