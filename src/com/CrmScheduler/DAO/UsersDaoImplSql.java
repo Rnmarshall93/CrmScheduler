@@ -2,11 +2,15 @@ package com.CrmScheduler.DAO;
 
 import com.CrmScheduler.HibernateConf;
 import com.CrmScheduler.HelperUtilties.LanguageSettings;
+import com.CrmScheduler.SpringConf;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import com.CrmScheduler.entity.CrmUser;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
@@ -14,9 +18,11 @@ import java.util.ArrayList;
 /**
  * Implementation of a User com.CrmScheduler.DAO using SQL.
  */
+@Component
 public class UsersDaoImplSql implements IUserDao {
 
-
+    public UsersDaoImplSql() {
+    }
 
     /**
      * Adds a user to the database. This method is implemented but never used.
@@ -45,6 +51,7 @@ public class UsersDaoImplSql implements IUserDao {
 
     @Override
     public CrmUser getUser(String username, String password) {
+        AnnotationConfigApplicationContext context =new AnnotationConfigApplicationContext(SpringConf.class);
 
         try
         {
@@ -153,4 +160,6 @@ public class UsersDaoImplSql implements IUserDao {
         session.getTransaction().commit();
         session.close();
         }
+
+
 }

@@ -1,10 +1,37 @@
 package com.CrmScheduler;
 
+import com.CrmScheduler.DAO.*;
 import org.springframework.context.annotation.*;
 
 @Configuration
-@ComponentScan(basePackages = "com.CrmScheduler.HelperUtilities")
+@EnableAspectJAutoProxy
+//@ComponentScan(basePackages = "com.CrmScheduler.HelperUtilities")
+@ComponentScan("com.CrmScheduler")
 public class SpringConf {
+    @Bean
+    public AppointmentDaoImplSql appointmentDaoImplSql() {
+        return new AppointmentDaoImplSql();
+    }
+
+    @Bean
+    public ContactsDaoImplSql contactsDaoImplSql() {
+        return new ContactsDaoImplSql();
+    }
+
+    @Bean
+    public CountriesDaoImplSql countriesDaoImplSql(){
+        return new CountriesDaoImplSql();
+    }
+
+    @Bean
+    public CustomerDaoImplSql customerDaoImplSql() {
+        return new CustomerDaoImplSql();
+    }
+
+    @Bean
+    public FirstLevelDivisionsDaoImplSql firstLevelDivisionsDaoImplSql(){
+        return new FirstLevelDivisionsDaoImplSql();
+    }
 
 
 }

@@ -2,10 +2,9 @@ package com.CrmScheduler.controller;
 
 
 import com.CrmScheduler.DAO.IUserDao;
-import com.CrmScheduler.DAO.UsersDaoImplSql;
 import com.CrmScheduler.HelperUtilties.ImpendingAppointmentSingleton;
-import com.CrmScheduler.HelperUtilties.LoginAuditor;
 import com.CrmScheduler.HelperUtilties.LanguageSettings;
+import com.CrmScheduler.SpringConf;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import com.CrmScheduler.entity.CrmUser;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.ZoneId;
 
@@ -88,6 +89,8 @@ public class LoginFormController {
         LanguageSettings languageSettings = LanguageSettings.getInstance();
         ZoneId zoneId = ZoneId.systemDefault();
 
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        IUserDao dao = context.getBean(IUserDao.class);
         //setup the controls based on whether or not the user's language is english or french
         if(languageSettings.getSystemLanguage() == "english")
         {
@@ -110,15 +113,12 @@ public class LoginFormController {
      * When the user logs in, if there is an existing appointment that is approaching within 15 minutes, they will be alerted immediately after login.
      */
     public void Login() {
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConf.class);
         try {
             CrmUser verifiedUser;
             if (isFormInputValid()) {
-                IUserDao userdao = new UsersDaoImplSql();
+                IUserDao userdao = ctx.getBean(IUserDao.class);
                 verifiedUser = userdao.getUser(inputUsername.getText(), inputPassword.getText());
-                if (verifiedUser != null)
-                    LoginAuditor.RecordLogin(verifiedUser.getUserName(), true);
-                else
-                    LoginAuditor.RecordLogin(inputUsername.getText(), false);
             }
             else {
                 handleBadInput();
