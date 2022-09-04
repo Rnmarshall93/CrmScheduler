@@ -3,6 +3,8 @@ package com.CrmScheduler;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.CrmScheduler.entity.*;
 import org.hibernate.SessionFactory;
@@ -24,21 +26,18 @@ public class HibernateConf {
                 secretProps.load(secretFile);
 
                 final String hostString = secretProps.getProperty("hostString");
-                final String dbName = secretProps.getProperty("dbName");
                 final String dbUser = secretProps.getProperty("dbUser");
                 final String dbPass = secretProps.getProperty("dbPass");
 
                 // Hibernate settings equivalent to hibernate.cfg.xml's properties
                 Properties settings = new Properties();
                 settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                settings.put(Environment.URL, "jdbc:mysql://localhost:3308/crm_scheduler"); //working
-
+                settings.put(Environment.URL, hostString);
                 settings.put(Environment.USER, dbUser);
                 settings.put(Environment.PASS, dbPass);
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 
-                settings.put(Environment.SHOW_SQL, "true");
-
+                settings.put(Environment.SHOW_SQL, "false");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
                 //for db testing only
@@ -52,7 +51,7 @@ public class HibernateConf {
                 configuration.addAnnotatedClass(Country.class);
                 configuration.addAnnotatedClass(Appointment.class);
                 configuration.addAnnotatedClass(Contact.class);
-
+               // java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
 
