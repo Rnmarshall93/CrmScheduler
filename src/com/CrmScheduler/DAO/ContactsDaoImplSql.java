@@ -8,6 +8,7 @@ import com.CrmScheduler.entity.Contact;
 import org.hibernate.HibernateError;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 /**
  * Contact Dao implemented in sql
  */
+@Component
 public class ContactsDaoImplSql implements IContactsDao {
     /**
      * Adds a new contact to the database

@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import com.CrmScheduler.entity.FirstLevelDivision;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 /**
  * Implementation in sql for the FirstLevelDivision com.CrmScheduler.DAO
  */
+@Component
 public class FirstLevelDivisionsDaoImplSql implements IFirstLevelDivisionsDao {
 
     /**

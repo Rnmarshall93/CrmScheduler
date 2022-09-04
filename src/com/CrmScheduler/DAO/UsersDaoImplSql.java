@@ -58,12 +58,12 @@ public class UsersDaoImplSql implements IUserDao {
             Session session = HibernateConf.getSessionFactory().openSession();
             session.beginTransaction();
 
-            Query q = session.createQuery("FROM CrmUser u WHERE u.password = :pwd AND u.userName = :username");
+            Query query = session.createQuery("FROM CrmUser u WHERE u.password = :pwd AND u.userName = :username");
 
 
-            q.setParameter("pwd", password);
-            q.setParameter("username", username);
-            CrmUser user = (CrmUser) q.getSingleResult();
+            query.setParameter("pwd", password);
+            query.setParameter("username", username);
+            CrmUser user = (CrmUser) query.getSingleResult();
 
             session.getTransaction().commit();
             session.close();

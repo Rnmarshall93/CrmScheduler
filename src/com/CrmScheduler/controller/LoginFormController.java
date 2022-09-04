@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import com.CrmScheduler.entity.CrmUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -91,6 +92,8 @@ public class LoginFormController {
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
         IUserDao dao = context.getBean(IUserDao.class);
+        context.close();
+
         //setup the controls based on whether or not the user's language is english or french
         if(languageSettings.getSystemLanguage() == "english")
         {

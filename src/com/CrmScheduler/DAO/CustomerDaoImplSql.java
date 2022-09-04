@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import com.CrmScheduler.entity.Customer;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 /**
  * Implementation of a Customer com.CrmScheduler.DAO in SQL.
  */
+@Component
 public class CustomerDaoImplSql implements ICustomerDao {
 
     /**

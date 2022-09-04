@@ -4,6 +4,7 @@ import com.CrmScheduler.DAO.AppointmentDaoImplSql;
 import com.CrmScheduler.DAO.IAppointmentDao;
 import com.CrmScheduler.DAO.ICustomerDao;
 import com.CrmScheduler.DAO.CustomerDaoImplSql;
+import com.CrmScheduler.SpringConf;
 import com.CrmScheduler.entity.CrmUser;
 import com.CrmScheduler.entity.DetailedCustomer;
 import com.CrmScheduler.HelperUtilties.ImpendingAppointmentSingleton;
@@ -18,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import com.CrmScheduler.entity.*;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Date;
 import java.util.List;
@@ -168,7 +170,10 @@ public class CustomerManagerController {
         Stage openWindow = (Stage) Stage.getWindows().stream().filter((window) -> window.isShowing()).findFirst().get();
         openWindow.setTitle("Customer Manager");
 
-        ICustomerDao ICustomerDao = new CustomerDaoImplSql();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        ICustomerDao ICustomerDao = context.getBean(CustomerDaoImplSql.class);
+        context.close();
+
         ICustomerDao.getAllCustomers().forEach(n -> foundCustomers.add(new DetailedCustomer(n)));
         buildTable(foundCustomers);
         if (ImpendingAppointmentSingleton.getInstance().getFoundAppointment() != null) {
@@ -180,8 +185,9 @@ public class CustomerManagerController {
 
     public void filterCustomers()
     {
-        ICustomerDao ICustomerDao = new CustomerDaoImplSql();
-
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        ICustomerDao ICustomerDao = context.getBean(ICustomerDao.class);
+        context.close();
         String matchingSequence = textboxFilterCustomers.getText();
 
         List<Customer> foundCustomers = ICustomerDao.getAllCustomers().stream().filter(customer -> customer.getCustomerName().toLowerCase().contains(matchingSequence.toLowerCase())).collect(Collectors.toList());
@@ -258,11 +264,13 @@ public class CustomerManagerController {
                 Alert deleteWarning = new Alert(Alert.AlertType.WARNING, "are you sure you want to delete customer with ID of  " + selectedCustomer.getCustomerId() + ", and, any associated appointments??", ButtonType.OK, ButtonType.CANCEL);
                 Optional<ButtonType> alertInput = deleteWarning.showAndWait();
                 if (alertInput.get() == ButtonType.OK) {
-                    ICustomerDao ICustomerDao = new CustomerDaoImplSql();
+                    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+                    ICustomerDao iCustomerDao = context.getBean(ICustomerDao.class);
+                    context.close();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Customer with ID " + selectedCustomer.getCustomerId() + " has been deleted.", ButtonType.OK);
                     alert.showAndWait();
                     foundCustomers.remove(selectedCustomer);
-                    ICustomerDao.deleteCustomer(selectedCustomer.getCustomerId());
+                    iCustomerDao.deleteCustomer(selectedCustomer.getCustomerId());
                     filterCustomers();
                 }
             } else {
@@ -289,9 +297,11 @@ public class CustomerManagerController {
             Scene appointmentManagerScene = new Scene(appointmentManagerWindow);
             Stage window = (Stage) buttonNewCustomer.getScene().getWindow();
             AppointmentManagerController controller = fxmlLoader.getController();
-            IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+            IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+            context.close();
             ObservableList<DetailedAppointment> appointmentsList = FXCollections.observableArrayList();
-            IAppointmentDao.getAllAppointments().forEach(n -> appointmentsList.add(new DetailedAppointment(n)));
+            iAppointmentDao.getAllAppointments().forEach(n -> appointmentsList.add(new DetailedAppointment(n)));
             controller.buildTable(appointmentsList);
             controller.setLoggedInUser(this.loggedInUser);
             window.setScene(appointmentManagerScene);

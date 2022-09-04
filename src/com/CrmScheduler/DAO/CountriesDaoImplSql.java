@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import com.CrmScheduler.entity.Country;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * Implementation in sql of the Countries com.CrmScheduler.DAO
  */
+@Component
 public class CountriesDaoImplSql implements ICountriesDao {
     /**
      * Adds a new country to the database

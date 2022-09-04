@@ -6,6 +6,7 @@ import com.CrmScheduler.DAO.IAppointmentDao;
 import com.CrmScheduler.DAO.ICustomerDao;
 import com.CrmScheduler.DAO.CustomerDaoImplSql;
 import com.CrmScheduler.HelperUtilties.TimeTools;
+import com.CrmScheduler.SpringConf;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import com.CrmScheduler.entity.Appointment;
 import com.CrmScheduler.entity.Contact;
 import com.CrmScheduler.entity.DetailedAppointment;
 import com.CrmScheduler.entity.CrmUser;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -234,8 +236,11 @@ public class CreateEditAppointmentController {
             alert.showAndWait();
             return false;
         }
-        IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
-        Appointment conflictingCustomerAppointment = IAppointmentDao.getAllAppointments().stream().filter(existingAppointment -> existingAppointment.getAppointmentId() != appointment.getAppointmentId() && existingAppointment.isConflictingWithCustomer.test(appointment, existingAppointment)).findFirst().orElse(null);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+        context.close();
+
+        Appointment conflictingCustomerAppointment = iAppointmentDao.getAllAppointments().stream().filter(existingAppointment -> existingAppointment.getAppointmentId() != appointment.getAppointmentId() && existingAppointment.isConflictingWithCustomer.test(appointment, existingAppointment)).findFirst().orElse(null);
         if (conflictingCustomerAppointment != null) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment with the ID " + conflictingCustomerAppointment.getAppointmentId()
                     + " was found to be conflicting with the new appointment. Please make sure the selected Customer is not scheduled during this time.\n" + "Start: "
@@ -260,9 +265,13 @@ public class CreateEditAppointmentController {
             Stage window = (Stage) inputType.getScene().getWindow();
             AppointmentManagerController controller = fxmlLoader.getController();
             controller.setLoggedInUser(this.loggedInUser);
-            IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
+
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+            IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+            context.close();
+
             ObservableList<DetailedAppointment> detailedAppointments = FXCollections.observableArrayList();
-            IAppointmentDao.getAllAppointments().forEach((appointment -> detailedAppointments.add(new DetailedAppointment(appointment))));
+            iAppointmentDao.getAllAppointments().forEach((appointment -> detailedAppointments.add(new DetailedAppointment(appointment))));
 
             controller.buildTable(detailedAppointments);
 
@@ -289,8 +298,10 @@ public class CreateEditAppointmentController {
         openWindow.setTitle("Create/Edit Appointment");
 
         ObservableList<String> customerIds = FXCollections.observableArrayList();
-        ICustomerDao ICustomerDao = new CustomerDaoImplSql();
-        ICustomerDao.getAllCustomers().forEach(customer -> customerIds.add(String.valueOf(customer.getCustomerId())));
+
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        ICustomerDao iCustomerDao = context.getBean(ICustomerDao.class);
+        iCustomerDao.getAllCustomers().forEach(customer -> customerIds.add(String.valueOf(customer.getCustomerId())));
         comboCustomerIds.setItems(customerIds);
 
     }
@@ -325,8 +336,10 @@ public class CreateEditAppointmentController {
                 appointment.setLastUpdate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 if (!isValidAppointment(appointment))
                     return;
-                IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
-                IAppointmentDao.createAppointment(appointment);
+
+                AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+                IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+                iAppointmentDao.createAppointment(appointment);
                 returnToAppointmentForm();
             } else {
                 Appointment appointment = new Appointment();
@@ -350,8 +363,12 @@ public class CreateEditAppointmentController {
                 appointment.setContactId(contactsList.filtered((x) -> x.getContactName().equals(comboContact.getValue())).get(0).getContactId());
                 if (!isValidAppointment(appointment))
                     return;
-                IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
-                IAppointmentDao.updateAppointment(Integer.parseInt(inputAppointmentId.getText()), appointment);
+
+                AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+                IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+                context.close();
+
+                iAppointmentDao.updateAppointment(Integer.parseInt(inputAppointmentId.getText()), appointment);
                 returnToAppointmentForm();
             }
         }

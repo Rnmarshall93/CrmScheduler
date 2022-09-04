@@ -6,6 +6,7 @@ import com.CrmScheduler.DAO.IAppointmentDao;
 import com.CrmScheduler.DAO.IContactsDao;
 import com.CrmScheduler.DAO.ContactsDaoImplSql;
 import com.CrmScheduler.HelperUtilties.TimeTools;
+import com.CrmScheduler.SpringConf;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import com.CrmScheduler.entity.Appointment;
 import com.CrmScheduler.entity.DetailedAppointment;
 import com.CrmScheduler.entity.CrmUser;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -163,10 +165,13 @@ public class ReportsController {
         if (selectedMonth == null || selectedType == null) {
             textAreaMonthAndType.appendText("Please select values for both the Month and Type combo boxes to generate the report.");
         } else {
-            IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
+
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+            IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+            context.close();
             String s = LocalDateTime.now().getMonth().toString();
             ObservableList<Appointment> matchingAppointmentsList = FXCollections.observableArrayList();
-            IAppointmentDao.getAllAppointments().stream().filter(appointment -> TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getMonth().toString().equals(selectedMonth.toUpperCase())
+            iAppointmentDao.getAllAppointments().stream().filter(appointment -> TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getMonth().toString().equals(selectedMonth.toUpperCase())
                     && appointment.getType().equals(selectedType)).forEach(
                     matchingAppointment -> matchingAppointmentsList.add(matchingAppointment)
             );
@@ -185,9 +190,10 @@ public class ReportsController {
      */
     private void buildComboContactsData() {
 
-        IContactsDao IContactsDao = new ContactsDaoImplSql();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        IContactsDao iContactsDao = context.getBean(IContactsDao.class);
         ObservableList<String> contactDetails = FXCollections.observableArrayList();
-        IContactsDao.getAllContacts().forEach(contact -> contactDetails.add(contact.getContactId() + ": " + contact.getContactName()));
+        iContactsDao.getAllContacts().forEach(contact -> contactDetails.add(contact.getContactId() + ": " + contact.getContactName()));
         comboContactFilter.setItems(contactDetails);
         comboContactFilter.getItems().add("All Contacts");
     }
@@ -198,10 +204,12 @@ public class ReportsController {
      * of lambdas as well, helping to refine and build lists as needed.
      */
     private void buildOverviewReport() {
-        IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+        context.close();
         ObservableList<Appointment> expiredAppointments = FXCollections.observableArrayList();
         //Here I use a lambda to help filter the appropriate appointments using isBefore to see if an appointment has occured before a specified time
-        IAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.isBefore.test(TimeTools.ConvertUtcToSystemTime(appointment.getStart()), Timestamp.from(Instant.now()))).forEach(appointment ->
+        iAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.isBefore.test(TimeTools.ConvertUtcToSystemTime(appointment.getStart()), Timestamp.from(Instant.now()))).forEach(appointment ->
                 expiredAppointments.add(appointment));
         long appointmentsBeforeNow = expiredAppointments.size();
         textAreaStats.appendText("Appointments past expiration : " + appointmentsBeforeNow);
@@ -210,14 +218,14 @@ public class ReportsController {
 
         ObservableList<Appointment> upcomingAppointments = FXCollections.observableArrayList();
         //Here I use a lambda again, to help filter. This time its isAfter which helps determine is appointments are after a specified time.
-        IAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.isAfter.test(appointment.getStart(), Timestamp.from(Instant.now()))).forEach(appointment ->
+        iAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.isAfter.test(appointment.getStart(), Timestamp.from(Instant.now()))).forEach(appointment ->
                 upcomingAppointments.add(appointment));
         textAreaStats.appendText("\n\nUpcoming appointments");
         upcomingAppointments.forEach(appointment -> textAreaStats.appendText("\nID:" + appointment.getAppointmentId() + "\tDescription: " + appointment
                 .getDescription() + "\tStart time (Local time) : " + TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toString()));
         long appointmentsUpcoming = upcomingAppointments.size();
         textAreaStats.appendText("\n\nTotal Appointments awaiting completion : " + appointmentsUpcoming);
-        long totalAppointments = IAppointmentDao.getAllAppointments().size();
+        long totalAppointments = iAppointmentDao.getAllAppointments().size();
         double appointmentsPerMonth = (double) totalAppointments / 12;
         String formattedAppointmentsPerMonth = new DecimalFormat("#.###").format(appointmentsPerMonth);
         textAreaStats.appendText("\nAverage appointments per month (All-time) : " + formattedAppointmentsPerMonth);
@@ -228,14 +236,15 @@ public class ReportsController {
      */
     @FXML
     public void initialize() {
-        IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
-
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+        context.close();
         Stage openWindow = (Stage) Stage.getWindows().stream().filter((window) -> window.isShowing()).findFirst().get();
         openWindow.setTitle("Reports for internal use");
         tableAppointments.getSortOrder().add(columnContact);
         buildReportsByMonthAndType();
         ObservableList allAppointments = FXCollections.observableArrayList();
-        allAppointments.addAll(IAppointmentDao.getAllAppointments());
+        allAppointments.addAll(iAppointmentDao.getAllAppointments());
         buildSchedule(allAppointments);
         buildComboContactsData();
         buildOverviewReport();
@@ -245,7 +254,7 @@ public class ReportsController {
         comboMonths.setItems(months);
 
         HashSet<String> appointmentTypes = new HashSet<>();
-        IAppointmentDao.getAllAppointments().forEach(appointment -> appointmentTypes.add(appointment.getType()));
+        iAppointmentDao.getAllAppointments().forEach(appointment -> appointmentTypes.add(appointment.getType()));
         ObservableList<String> foundTypes = FXCollections.observableArrayList();
         appointmentTypes.forEach(type -> foundTypes.add(type));
         comboTypes.setItems(foundTypes);
@@ -257,17 +266,19 @@ public class ReportsController {
      * Filters the table based on the selected contact from the contacts combobox.
      */
     public void filterTableByContact() {
-        IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+        context.close();
         String selectedValue = (String) comboContactFilter.getValue();
         if (selectedValue == "All Contacts") {
             ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-            allAppointments.addAll(IAppointmentDao.getAllAppointments());
+            allAppointments.addAll(iAppointmentDao.getAllAppointments());
             buildSchedule(allAppointments);
             return;
         }
         int selectedId = Integer.parseInt(selectedValue.split(":")[0]);
         ObservableList<Appointment> appointmentsByContact = FXCollections.observableArrayList();
-        appointmentsByContact.addAll(IAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.getContactId() == selectedId).collect(Collectors.toList()));
+        appointmentsByContact.addAll(iAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.getContactId() == selectedId).collect(Collectors.toList()));
         buildSchedule(appointmentsByContact);
     }
 
@@ -311,9 +322,13 @@ public class ReportsController {
             Scene appointmentManagerScene = new Scene(appointmentManagerWindow);
             Stage window = (Stage) textAreaMonthAndType.getScene().getWindow();
             AppointmentManagerController controller = fxmlLoader.getController();
-            IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
+
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+            IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+            context.close();
+
             ObservableList<DetailedAppointment> appointmentsList = FXCollections.observableArrayList();
-            IAppointmentDao.getAllAppointments().forEach(n -> appointmentsList.add(new DetailedAppointment(n)));
+            iAppointmentDao.getAllAppointments().forEach(n -> appointmentsList.add(new DetailedAppointment(n)));
             controller.buildTable(appointmentsList);
             controller.setLoggedInUser(this.loggedInUser);
             window.setScene(appointmentManagerScene);

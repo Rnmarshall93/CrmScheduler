@@ -8,8 +8,8 @@ import org.springframework.context.annotation.*;
 //@ComponentScan(basePackages = "com.CrmScheduler.HelperUtilities")
 @ComponentScan("com.CrmScheduler")
 public class SpringConf {
-    @Bean
-    public AppointmentDaoImplSql appointmentDaoImplSql() {
+/*    @Bean
+    public IAppointmentDao appointmentDaoImplSql() {
         return new AppointmentDaoImplSql();
     }
 
@@ -33,5 +33,5 @@ public class SpringConf {
         return new FirstLevelDivisionsDaoImplSql();
     }
 
-
+*/
 }

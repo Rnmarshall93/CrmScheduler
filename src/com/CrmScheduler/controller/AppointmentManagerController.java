@@ -7,6 +7,7 @@ import com.CrmScheduler.DAO.IContactsDao;
 import com.CrmScheduler.DAO.ContactsDaoImplSql;
 import com.CrmScheduler.HelperUtilties.ImpendingAppointmentSingleton;
 import com.CrmScheduler.HelperUtilties.TimeTools;
+import com.CrmScheduler.SpringConf;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import com.CrmScheduler.entity.Appointment;
 import com.CrmScheduler.entity.Contact;
 import com.CrmScheduler.entity.DetailedAppointment;
 import com.CrmScheduler.entity.CrmUser;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -184,7 +186,11 @@ public class AppointmentManagerController {
     private ObservableList<Appointment> getAppointmentsMatchingTitle()
     {
         List<Appointment> filteredAppointments = FXCollections.observableArrayList();
-        IAppointmentDao iAppointmentDao = new AppointmentDaoImplSql();
+
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+        IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+        context.close();
+
         if(textboxFilterAppointments.getText().length() > 0)
         {
             String matchingSequence = textboxFilterAppointments.getText();
@@ -207,7 +213,10 @@ public class AppointmentManagerController {
         }
         else
         {
-            IAppointmentDao appointmentDao = new AppointmentDaoImplSql();
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+            IAppointmentDao appointmentDao = context.getBean(IAppointmentDao.class);
+            context.close();
+
             for (Appointment dbAppointment: appointmentDao.getAllAppointments()
                  ) {
                 appointmentsFound.add(dbAppointment);
@@ -236,8 +245,6 @@ public class AppointmentManagerController {
         Calendar currentDateCal = Calendar.getInstance();
         Instant timeInstant = TimeTools.ConvertUtcToSystemTime(Timestamp.from(Instant.now())).toInstant();
         currentDateCal.setTime(Date.from(timeInstant));
-
-        IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
 
         for (Appointment appointment : appointments) {
             //convert the current time to calendar
@@ -274,9 +281,13 @@ public class AppointmentManagerController {
             controller.setLoggedInUser(this.loggedInUser);
             window.setScene(addEditAppointmentScene);
             window.show();
-            IContactsDao IContactsDao = new ContactsDaoImplSql();
+
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+            IContactsDao iContactsDao = context.getBean(IContactsDao.class);
+            context.close();
+
             ObservableList<Contact> contactsList = FXCollections.observableArrayList();
-            contactsList.addAll(IContactsDao.getAllContacts());
+            contactsList.addAll(iContactsDao.getAllContacts());
             ObservableList<String> contactNames = FXCollections.observableArrayList();
             for (Contact c : contactsList
             ) {
@@ -320,8 +331,11 @@ public class AppointmentManagerController {
                 controller.inputUserId.setText(String.valueOf(selectedAppointment.getUserId()));
                 controller.setExistingAppointment(selectedAppointment);
 
-                IContactsDao IContactsDao = new ContactsDaoImplSql();
-                controller.getContactsList().addAll(IContactsDao.getAllContacts());
+                AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+                IContactsDao iContactsDao = context.getBean(IContactsDao.class);
+                context.close();
+
+                controller.getContactsList().addAll(iContactsDao.getAllContacts());
 
                 ObservableList<String> contactNames = FXCollections.observableArrayList();
                 for (Contact c : controller.getContactsList()
@@ -329,7 +343,7 @@ public class AppointmentManagerController {
                     contactNames.add(c.getContactName());
                 }
                 controller.comboContact.setItems(contactNames);
-                Contact currentContact = IContactsDao.getAllContacts().stream().filter(contact -> contact.getContactId() == selectedAppointment.getContactId()).findFirst().orElse(null);
+                Contact currentContact = iContactsDao.getAllContacts().stream().filter(contact -> contact.getContactId() == selectedAppointment.getContactId()).findFirst().orElse(null);
                 controller.comboContact.getSelectionModel().select(currentContact.getContactName());
                 window.setScene(addEditAppointmentScene);
                 window.show();
@@ -354,14 +368,18 @@ public class AppointmentManagerController {
     public void deleteAppointment() {
         Appointment selectedAppointment = (Appointment) tableAppointments.getSelectionModel().getSelectedItem();
         if (selectedAppointment != null) {
-            IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
+
+            AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
+            IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
+            context.close();
+
             Alert deleteWarning = new Alert(Alert.AlertType.WARNING, "are you sure you want to cancel appointment with ID of  " + selectedAppointment.getAppointmentId() + " and of appointment type " +
                     selectedAppointment.getType() + "?", ButtonType.OK, ButtonType.CANCEL);
             Optional<ButtonType> alertInput = deleteWarning.showAndWait();
             if (alertInput.get() == ButtonType.OK) {
-                IAppointmentDao.deleteAppointments(selectedAppointment.getAppointmentId());
+                iAppointmentDao.deleteAppointments(selectedAppointment.getAppointmentId());
                 ObservableList<DetailedAppointment> remainingAppointments = FXCollections.observableArrayList();
-                IAppointmentDao.getAllAppointments().forEach((appointment -> remainingAppointments.add(new DetailedAppointment(appointment))));
+                iAppointmentDao.getAllAppointments().forEach((appointment -> remainingAppointments.add(new DetailedAppointment(appointment))));
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Appointment with ID of " + selectedAppointment.getAppointmentId() + " of appointment type " +
                         selectedAppointment.getType() + " was cancelled", ButtonType.OK);
                 alert.showAndWait();
