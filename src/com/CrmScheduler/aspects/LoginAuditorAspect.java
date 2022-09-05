@@ -31,10 +31,6 @@ public class LoginAuditorAspect {
     @AfterReturning(value = "execution(public * getUser(..))",
             returning = "result")
     public void doLogging(JoinPoint joinPoint, CrmUser result) {
-        if (result == null) {
-            System.out.println("User wasn't found");
-        } else
-            System.out.println(result.toString());
 
 
         try {
