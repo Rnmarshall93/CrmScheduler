@@ -1,5 +1,7 @@
 package com.CrmScheduler.HelperUtilties;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -18,7 +20,7 @@ public class TimeTools {
      * @param date the timestamp to convert to Utc
      * @return a timestamp with the value adjusted to the UTC zone
      */
-    public static Timestamp ConvertDateToUTC(Timestamp date)
+    public Timestamp ConvertDateToUTC(Timestamp date)
     {
         LocalDateTime localDateTime = date.toLocalDateTime();
         ZonedDateTime localZonedTime = localDateTime.atZone(ZoneId.systemDefault());
@@ -41,7 +43,7 @@ public class TimeTools {
      * @param date the timestamp to convert to EST
      * @return a timestamp with its value adjusted from UTC to EST
      */
-    public static Timestamp ConvertUtcToEst(Timestamp date) {
+    public Timestamp ConvertUtcToEst(Timestamp date) {
         LocalDateTime utcDateTime = date.toLocalDateTime();
         ZonedDateTime utcZonedTime = utcDateTime.atZone(ZoneId.of("UTC"));
         TimeZone timeZone = TimeZone.getTimeZone(utcZonedTime.getZone().getId());
@@ -62,7 +64,7 @@ public class TimeTools {
      * @param date the timestamp to convert from UTC to local time
      * @return a timestamp with its value adjusted from UTC to EST
      */
-    public static Timestamp ConvertUtcToSystemTime(Timestamp date)
+    public Timestamp ConvertUtcToSystemTime(Timestamp date)
     {
         LocalDateTime utcDateTime = date.toLocalDateTime();
         ZonedDateTime utcZonedTime = utcDateTime.atZone(ZoneId.of("UTC"));
@@ -73,6 +75,14 @@ public class TimeTools {
         else
             utcZonedTime.plusHours(1);
         return Timestamp.from(utcZonedTime.withZoneSameInstant(ZoneId.systemDefault()).toInstant());
+    }
+
+    public TimeTools() {
+    }
+
+    @Override
+    public String toString() {
+        return "TimeTools{}";
     }
 }
 

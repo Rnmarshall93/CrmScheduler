@@ -116,12 +116,13 @@ public class LoginFormController {
      * When the user logs in, if there is an existing appointment that is approaching within 15 minutes, they will be alerted immediately after login.
      */
     public void Login() {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConf.class);
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConf.class);
         try {
             CrmUser verifiedUser;
             if (isFormInputValid()) {
                 IUserDao userdao = ctx.getBean(IUserDao.class);
                 verifiedUser = userdao.getUser(inputUsername.getText(), inputPassword.getText());
+                ctx.close();
             }
             else {
                 handleBadInput();

@@ -34,13 +34,15 @@ public class DetailedAppointment extends Appointment {
      */
     public DetailedAppointment(Appointment baseAppointment)
     {
+        TimeTools timeTools = new TimeTools();
+
         this.setAppointmentId(baseAppointment.getAppointmentId());
         this.setTitle(baseAppointment.getTitle());
         this.setDescription(baseAppointment.getDescription());
         this.setLocation(baseAppointment.getLocation());
         this.setType(baseAppointment.getType());
-        this.setStart(TimeTools.ConvertUtcToSystemTime(baseAppointment.getStart()));
-        this.setEnd(TimeTools.ConvertUtcToSystemTime(baseAppointment.getEnd()));
+        this.setStart(timeTools.ConvertUtcToSystemTime(baseAppointment.getStart()));
+        this.setEnd(timeTools.ConvertUtcToSystemTime(baseAppointment.getEnd()));
         this.setCreateDate(baseAppointment.getCreateDate());
         this.setCreatedBy(baseAppointment.getCreatedBy());
         this.setLastUpdate(baseAppointment.getLastUpdate());

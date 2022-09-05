@@ -1,6 +1,7 @@
 package com.CrmScheduler;
 
 import com.CrmScheduler.DAO.*;
+import com.CrmScheduler.HelperUtilties.TimeTools;
 import org.springframework.context.annotation.*;
 
 @Configuration
@@ -8,30 +9,10 @@ import org.springframework.context.annotation.*;
 //@ComponentScan(basePackages = "com.CrmScheduler.HelperUtilities")
 @ComponentScan("com.CrmScheduler")
 public class SpringConf {
-/*    @Bean
-    public IAppointmentDao appointmentDaoImplSql() {
-        return new AppointmentDaoImplSql();
-    }
-
     @Bean
-    public ContactsDaoImplSql contactsDaoImplSql() {
-        return new ContactsDaoImplSql();
+    public TimeTools timeTools()
+    {
+        return new TimeTools();
     }
 
-    @Bean
-    public CountriesDaoImplSql countriesDaoImplSql(){
-        return new CountriesDaoImplSql();
-    }
-
-    @Bean
-    public CustomerDaoImplSql customerDaoImplSql() {
-        return new CustomerDaoImplSql();
-    }
-
-    @Bean
-    public FirstLevelDivisionsDaoImplSql firstLevelDivisionsDaoImplSql(){
-        return new FirstLevelDivisionsDaoImplSql();
-    }
-
-*/
 }

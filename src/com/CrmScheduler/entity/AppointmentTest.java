@@ -21,10 +21,12 @@ class AppointmentTest {
         Timestamp startDate = Timestamp.from(Instant.ofEpochSecond(1656952200));
         Timestamp endDate = Timestamp.from(Instant.ofEpochSecond(1656953100));
 
-        startDate = TimeTools.ConvertDateToUTC(startDate);
+        TimeTools timeTools = new TimeTools();
+
+        startDate = timeTools.ConvertDateToUTC(startDate);
         testAppointment.setStart(Timestamp.from(startDate.toInstant()));
 
-        endDate = TimeTools.ConvertDateToUTC(endDate);
+        endDate = timeTools.ConvertDateToUTC(endDate);
         testAppointment.setEnd(Timestamp.from(endDate.toInstant()));
 
         assertTrue(testAppointment.isWithinBusinessHours(testAppointment));
@@ -41,10 +43,12 @@ class AppointmentTest {
         Timestamp startDate = Timestamp.from(Instant.ofEpochSecond(1657004400));
         Timestamp endDate = Timestamp.from(Instant.ofEpochSecond(1657005300));
 
-        startDate = TimeTools.ConvertDateToUTC(startDate);
+        TimeTools timeTools = new TimeTools();
+
+        startDate = timeTools.ConvertDateToUTC(startDate);
         testAppointment.setStart(Timestamp.from(startDate.toInstant()));
 
-        endDate = TimeTools.ConvertDateToUTC(endDate);
+        endDate = timeTools.ConvertDateToUTC(endDate);
         testAppointment.setEnd(Timestamp.from(endDate.toInstant()));
 
         assertFalse(testAppointment.isWithinBusinessHours(testAppointment));
@@ -61,7 +65,9 @@ class AppointmentTest {
         Appointment testAppointment = new Appointment();
         Timestamp startDate = Timestamp.from(Instant.ofEpochSecond(1656952200));
 
-        startDate = TimeTools.ConvertDateToUTC(startDate);
+        TimeTools timeTools = new TimeTools();
+
+        startDate = timeTools.ConvertDateToUTC(startDate);
         testAppointment.setStart(Timestamp.from(startDate.toInstant()));
 
         long appointmentStartInEpoch = testAppointment.getStart().toInstant().toEpochMilli();
@@ -80,7 +86,9 @@ class AppointmentTest {
         Appointment testAppointment = new Appointment();
         Timestamp startDate = Timestamp.from(Instant.ofEpochSecond(1656952200));
 
-        startDate = TimeTools.ConvertDateToUTC(startDate);
+        TimeTools timeTools = new TimeTools();
+
+        startDate = timeTools.ConvertDateToUTC(startDate);
         testAppointment.setStart(Timestamp.from(startDate.toInstant()));
 
         long appointmentStartInEpoch = testAppointment.getStart().toInstant().toEpochMilli();
@@ -98,7 +106,9 @@ class AppointmentTest {
         Appointment testAppointment = new Appointment();
         Timestamp startDate = Timestamp.from(Instant.ofEpochSecond(1656952200));
 
-        startDate = TimeTools.ConvertDateToUTC(startDate);
+        TimeTools timeTools = new TimeTools();
+
+        startDate = timeTools.ConvertDateToUTC(startDate);
         testAppointment.setStart(Timestamp.from(startDate.toInstant()));
 
         long appointmentStartInEpoch = testAppointment.getStart().toInstant().toEpochMilli();
@@ -116,7 +126,9 @@ class AppointmentTest {
         Appointment testAppointment = new Appointment();
         Timestamp startDate = Timestamp.from(Instant.ofEpochSecond(1656952200));
 
-        startDate = TimeTools.ConvertDateToUTC(startDate);
+        TimeTools timeTools = new TimeTools();
+
+        startDate = timeTools.ConvertDateToUTC(startDate);
         testAppointment.setStart(Timestamp.from(startDate.toInstant()));
 
         long appointmentStartInEpoch = testAppointment.getStart().toInstant().toEpochMilli();

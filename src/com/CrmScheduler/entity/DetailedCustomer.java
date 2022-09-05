@@ -21,14 +21,16 @@ public class DetailedCustomer extends Customer {
 
     public DetailedCustomer(Customer c)
     {
+        TimeTools timeTools = new TimeTools();
+
         this.setCustomerId(c.getCustomerId());
         this.setCustomerName(c.getCustomerName());
         this.setAddress(c.getAddress());
         this.setPostalCode(c.getPostalCode());
         this.setPhone(c.getPhone());
-        this.setCreateDate(TimeTools.ConvertUtcToSystemTime(c.getCreateDate()));
+        this.setCreateDate(timeTools.ConvertUtcToSystemTime(c.getCreateDate()));
         this.setCreatedBy(c.getCreatedBy());
-        this.setLastUpdate(TimeTools.ConvertUtcToSystemTime(c.getLastUpdate()));
+        this.setLastUpdate(timeTools.ConvertUtcToSystemTime(c.getLastUpdate()));
         this.setLastUpdatedBy(c.getLastUpdatedBy());
         this.setDivisionId(c.getDivisionId());
         IFirstLevelDivisionsDao IFirstLevelDivisionsDao = new FirstLevelDivisionsDaoImplSql();

@@ -17,6 +17,9 @@ import java.util.function.Predicate;
 @Table(name = "appointments")
 public class Appointment {
 
+    @Transient
+    protected TimeTools timeTools = new TimeTools();
+
 
     /**
      ** Determines if the newAppointment is after the existingAppointment. Returns true if the newAppointment is after the existingAppointment.
@@ -50,8 +53,8 @@ public class Appointment {
      * Predicate used to determine if an appointment is within the warning period (Within 15 minutes). returns true if the appointment is occuring within 15 minutes of the users local time.
      */
     @Transient
-    public Predicate<Appointment> isAppointmentWithinWarningPeriod = appointment -> appointment.getStart().after(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now()))) &&
-            appointment.getStart().before(TimeTools.ConvertDateToUTC(Timestamp.valueOf(LocalDateTime.now().plusMinutes(15))));
+    public Predicate<Appointment> isAppointmentWithinWarningPeriod = appointment -> appointment.getStart().after(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now()))) &&
+            appointment.getStart().before(timeTools.ConvertDateToUTC(Timestamp.valueOf(LocalDateTime.now().plusMinutes(15))));
     /**
      * the unique ID of the appointment.
      */
@@ -133,8 +136,10 @@ public class Appointment {
      */
     public boolean isWithinBusinessHours(Appointment appointment)
     {
-        LocalDateTime start = TimeTools.ConvertUtcToEst(appointment.getStart()).toLocalDateTime();
-        LocalDateTime end = TimeTools.ConvertUtcToEst(appointment.getEnd()).toLocalDateTime();
+        TimeTools timeTools = new TimeTools();
+
+        LocalDateTime start = timeTools.ConvertUtcToEst(appointment.getStart()).toLocalDateTime();
+        LocalDateTime end = timeTools.ConvertUtcToEst(appointment.getEnd()).toLocalDateTime();
 
         //valid start hours are between 8 AM and 9:59 pm  ST since an appointment can't start at 10 PM
         if(start.getHour() >= 8 && start.getHour() < 22)

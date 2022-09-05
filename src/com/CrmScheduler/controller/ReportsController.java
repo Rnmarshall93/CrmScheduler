@@ -169,18 +169,22 @@ public class ReportsController {
             AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
             IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
             context.close();
+
+            TimeTools timeTools = new TimeTools();
+
             String s = LocalDateTime.now().getMonth().toString();
             ObservableList<Appointment> matchingAppointmentsList = FXCollections.observableArrayList();
-            iAppointmentDao.getAllAppointments().stream().filter(appointment -> TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getMonth().toString().equals(selectedMonth.toUpperCase())
+            iAppointmentDao.getAllAppointments().stream().filter(appointment -> timeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getMonth().toString().equals(selectedMonth.toUpperCase())
                     && appointment.getType().equals(selectedType)).forEach(
                     matchingAppointment -> matchingAppointmentsList.add(matchingAppointment)
             );
 
             int amountOfAppointments = matchingAppointmentsList.size();
 
+
             textAreaMonthAndType.setText("Appointments found for month of " + selectedMonth + " and type of " + selectedType + ": " + amountOfAppointments);
             matchingAppointmentsList.forEach(matchingAppointment -> textAreaMonthAndType.appendText(("\nID:" + matchingAppointment.getAppointmentId() + "\tDescription: " + matchingAppointment
-                    .getDescription() + "\tStart time (Local time) : " + TimeTools.ConvertUtcToSystemTime(matchingAppointment.getStart()).toString())));
+                    .getDescription() + "\tStart time (Local time) : " + timeTools.ConvertUtcToSystemTime(matchingAppointment.getStart()).toString())));
 
         }
     }
@@ -207,14 +211,17 @@ public class ReportsController {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
         IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
         context.close();
+
+
         ObservableList<Appointment> expiredAppointments = FXCollections.observableArrayList();
         //Here I use a lambda to help filter the appropriate appointments using isBefore to see if an appointment has occured before a specified time
-        iAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.isBefore.test(TimeTools.ConvertUtcToSystemTime(appointment.getStart()), Timestamp.from(Instant.now()))).forEach(appointment ->
+        TimeTools timeTools = new TimeTools();
+        iAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.isBefore.test(timeTools.ConvertUtcToSystemTime(appointment.getStart()), Timestamp.from(Instant.now()))).forEach(appointment ->
                 expiredAppointments.add(appointment));
         long appointmentsBeforeNow = expiredAppointments.size();
         textAreaStats.appendText("Appointments past expiration : " + appointmentsBeforeNow);
         expiredAppointments.forEach(appointment -> textAreaStats.appendText("\nID:" + appointment.getAppointmentId() + "\tDescription: " + appointment
-                .getDescription() + "\tStart time (Local time) : " + TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toString()));
+                .getDescription() + "\tStart time (Local time) : " + timeTools.ConvertUtcToSystemTime(appointment.getStart()).toString()));
 
         ObservableList<Appointment> upcomingAppointments = FXCollections.observableArrayList();
         //Here I use a lambda again, to help filter. This time its isAfter which helps determine is appointments are after a specified time.
@@ -222,7 +229,7 @@ public class ReportsController {
                 upcomingAppointments.add(appointment));
         textAreaStats.appendText("\n\nUpcoming appointments");
         upcomingAppointments.forEach(appointment -> textAreaStats.appendText("\nID:" + appointment.getAppointmentId() + "\tDescription: " + appointment
-                .getDescription() + "\tStart time (Local time) : " + TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toString()));
+                .getDescription() + "\tStart time (Local time) : " + timeTools.ConvertUtcToSystemTime(appointment.getStart()).toString()));
         long appointmentsUpcoming = upcomingAppointments.size();
         textAreaStats.appendText("\n\nTotal Appointments awaiting completion : " + appointmentsUpcoming);
         long totalAppointments = iAppointmentDao.getAllAppointments().size();

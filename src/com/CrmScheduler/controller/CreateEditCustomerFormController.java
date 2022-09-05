@@ -256,6 +256,7 @@ public class CreateEditCustomerFormController {
 
         try {
 
+            TimeTools timeTools = new TimeTools();
 
             if (creatingNewCustomer()) {
                 Customer c = new Customer();
@@ -264,10 +265,10 @@ public class CreateEditCustomerFormController {
                 c.setAddress(inputAddress.getText());
                 c.setPhone(inputPhone.getText());
                 c.setPostalCode(inputPostalCode.getText());
-                c.setCreateDate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                c.setCreateDate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 c.setCreateDate(getExistingCustomer().getCreateDate());
                 c.setCreatedBy(getExistingCustomer().getCreatedBy());
-                c.setLastUpdate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                c.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 c.setLastUpdatedBy(loggedInUser.getUserName());
                 c.setDivisionId((Integer.parseInt(inputDivisionId.getText())));
                 if (isFormInputValid()) {
@@ -284,9 +285,9 @@ public class CreateEditCustomerFormController {
                 c.setAddress(inputAddress.getText());
                 c.setPhone(inputPhone.getText());
                 c.setPostalCode(inputPostalCode.getText());
-                c.setCreateDate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                c.setCreateDate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 c.setCreatedBy(loggedInUser.getUserName());
-                c.setLastUpdate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                c.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 c.setLastUpdatedBy(loggedInUser.getUserName());
                 c.setDivisionId((Integer.parseInt(inputDivisionId.getText())));
 

@@ -242,10 +242,12 @@ public class CreateEditAppointmentController {
 
         Appointment conflictingCustomerAppointment = iAppointmentDao.getAllAppointments().stream().filter(existingAppointment -> existingAppointment.getAppointmentId() != appointment.getAppointmentId() && existingAppointment.isConflictingWithCustomer.test(appointment, existingAppointment)).findFirst().orElse(null);
         if (conflictingCustomerAppointment != null) {
+            TimeTools timeTools = new TimeTools();
+
             Alert alert = new Alert(Alert.AlertType.ERROR, "Appointment with the ID " + conflictingCustomerAppointment.getAppointmentId()
                     + " was found to be conflicting with the new appointment. Please make sure the selected Customer is not scheduled during this time.\n" + "Start: "
-                    + TimeTools.ConvertUtcToSystemTime(conflictingCustomerAppointment.getStart()) + "\nEnd: "
-                    + TimeTools.ConvertUtcToSystemTime(conflictingCustomerAppointment.getEnd()));
+                    + timeTools.ConvertUtcToSystemTime(conflictingCustomerAppointment.getStart()) + "\nEnd: "
+                    + timeTools.ConvertUtcToSystemTime(conflictingCustomerAppointment.getEnd()));
             alert.showAndWait();
             return false;
         }
@@ -315,6 +317,8 @@ public class CreateEditAppointmentController {
         if(!isFormInputValid())
             return;
 
+        TimeTools timeTools = new TimeTools();
+
         try {
             if (creatingNewAppointment()) {
                 Appointment appointment = new Appointment();
@@ -323,17 +327,17 @@ public class CreateEditAppointmentController {
                 appointment.setLocation(inputLocation.getText());
                 appointment.setType(inputType.getText());
                 Timestamp startTimestamp = Timestamp.valueOf(inputStart.getText());
-                appointment.setStart(TimeTools.ConvertDateToUTC(startTimestamp));
+                appointment.setStart(timeTools.ConvertDateToUTC(startTimestamp));
                 Timestamp endTimestamp = Timestamp.valueOf(inputEnd.getText());
-                appointment.setEnd(TimeTools.ConvertDateToUTC(endTimestamp));
+                appointment.setEnd(timeTools.ConvertDateToUTC(endTimestamp));
                 //The contact ID gets its value from the combobox for contacts being changed. It allows a more user friendly approach for selecting the contactID
                 appointment.setContactId(this.selectedContactId);
                 appointment.setCustomerId(Integer.parseInt(String.valueOf(comboCustomerIds.getSelectionModel().getSelectedItem())));
                 appointment.setUserId(Integer.parseInt(inputUserId.getText()));
                 appointment.setCreatedBy(loggedInUser.getUserName());
-                appointment.setCreateDate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                appointment.setCreateDate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 appointment.setLastUpdatedBy(loggedInUser.getUserName());
-                appointment.setLastUpdate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                appointment.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 if (!isValidAppointment(appointment))
                     return;
 
@@ -349,17 +353,17 @@ public class CreateEditAppointmentController {
                 appointment.setLocation(inputLocation.getText());
                 appointment.setType(inputType.getText());
                 Timestamp startTimestamp = Timestamp.valueOf(inputStart.getText());
-                appointment.setStart(TimeTools.ConvertDateToUTC(startTimestamp));
+                appointment.setStart(timeTools.ConvertDateToUTC(startTimestamp));
                 Timestamp endTimestamp = Timestamp.valueOf(inputEnd.getText());
-                appointment.setEnd(TimeTools.ConvertDateToUTC(endTimestamp));
+                appointment.setEnd(timeTools.ConvertDateToUTC(endTimestamp));
                 //The contact ID gets its value from the combobox for contacts being changed. It allows a more user friendly approach for selecting the contactID
                 appointment.setContactId(this.selectedContactId);
                 appointment.setCustomerId(Integer.parseInt(String.valueOf(comboCustomerIds.getSelectionModel().getSelectedItem())));
                 appointment.setUserId(Integer.parseInt(inputUserId.getText()));
-                appointment.setCreateDate(TimeTools.ConvertDateToUTC(getExistingAppointment().getCreateDate()));
+                appointment.setCreateDate(timeTools.ConvertDateToUTC(getExistingAppointment().getCreateDate()));
                 appointment.setCreatedBy(getExistingAppointment().getCreatedBy());
                 appointment.setLastUpdatedBy(loggedInUser.getUserName());
-                appointment.setLastUpdate(TimeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                appointment.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
                 appointment.setContactId(contactsList.filtered((x) -> x.getContactName().equals(comboContact.getValue())).get(0).getContactId());
                 if (!isValidAppointment(appointment))
                     return;

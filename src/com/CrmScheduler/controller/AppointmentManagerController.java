@@ -243,7 +243,9 @@ public class AppointmentManagerController {
         ObservableList<Appointment> appointmentsWithinWeek = FXCollections.observableArrayList();
 
         Calendar currentDateCal = Calendar.getInstance();
-        Instant timeInstant = TimeTools.ConvertUtcToSystemTime(Timestamp.from(Instant.now())).toInstant();
+
+        TimeTools timeTools = new TimeTools();
+        Instant timeInstant = timeTools.ConvertUtcToSystemTime(Timestamp.from(Instant.now())).toInstant();
         currentDateCal.setTime(Date.from(timeInstant));
 
         for (Appointment appointment : appointments) {
@@ -260,9 +262,13 @@ public class AppointmentManagerController {
     }
 
     public ObservableList<Appointment> filterAppointmentsWithinMonth(ObservableList<Appointment> appointments) {
+
         ObservableList<Appointment> appointmentsWithinMonth = FXCollections.observableArrayList();
-        appointments.stream().filter((appointment) -> TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getMonth() == LocalDateTime.now().getMonth()
-                && TimeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getYear() == LocalDateTime.now().getYear()).forEach(appointment -> appointmentsWithinMonth.add(new DetailedAppointment(appointment)));
+
+        TimeTools timeTools = new TimeTools();
+
+        appointments.stream().filter((appointment) -> timeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getMonth() == LocalDateTime.now().getMonth()
+                && timeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getYear() == LocalDateTime.now().getYear()).forEach(appointment -> appointmentsWithinMonth.add(new DetailedAppointment(appointment)));
         return appointmentsWithinMonth;
     }
 
