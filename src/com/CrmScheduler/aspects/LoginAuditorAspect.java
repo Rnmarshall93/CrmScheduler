@@ -22,12 +22,14 @@ import java.util.Arrays;
 @Aspect
 public class LoginAuditorAspect {
 
+
     /**
      * This method logs information any time a user logs in to the login_activity.txt file. It records the username, timestamp, and,
      * result of the attempt.
      * @param joinPoint Contains information about method signature, args, and other misc info.
      * @param result    the user being returned. If the user wasn't found, we will be dealing with a null value.
      */
+
     @AfterReturning(value = "execution(public * getUser(..))",
             returning = "result")
     public void doLogging(JoinPoint joinPoint, CrmUser result) {
@@ -56,5 +58,8 @@ public class LoginAuditorAspect {
             alert.showAndWait();
         }
     }
+
+
+
 
 }
