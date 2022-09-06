@@ -11,13 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.security.AccessControlException;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Arrays;
-
 @Component
 @Aspect
 public class LoginAuditorAspect {
