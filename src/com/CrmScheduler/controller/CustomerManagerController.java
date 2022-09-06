@@ -1,9 +1,7 @@
 package com.CrmScheduler.controller;
 
-import com.CrmScheduler.DAO.AppointmentDaoImplSql;
 import com.CrmScheduler.DAO.IAppointmentDao;
 import com.CrmScheduler.DAO.ICustomerDao;
-import com.CrmScheduler.DAO.CustomerDaoImplSql;
 import com.CrmScheduler.SpringConf;
 import com.CrmScheduler.entity.CrmUser;
 import com.CrmScheduler.entity.DetailedCustomer;
@@ -30,6 +28,8 @@ import java.util.stream.Collectors;
  * The com.CrmScheduler.controller class for ManagementForm
  */
 public class CustomerManagerController {
+
+
     /**
      *  Button for creating new customers. Opens the CreateEditCustomerForm for creating a blank customer.
      */
@@ -171,7 +171,7 @@ public class CustomerManagerController {
         openWindow.setTitle("Customer Manager");
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
-        ICustomerDao ICustomerDao = context.getBean(CustomerDaoImplSql.class);
+        ICustomerDao ICustomerDao = context.getBean(ICustomerDao.class);
         context.close();
 
         ICustomerDao.getAllCustomers().forEach(n -> foundCustomers.add(new DetailedCustomer(n)));
