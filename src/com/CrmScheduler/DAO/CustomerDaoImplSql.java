@@ -136,4 +136,7 @@ public class CustomerDaoImplSql implements ICustomerDao {
             alert.showAndWait();
         }
     }
+
+    public CustomerDaoImplSql() {
+    }
 }
