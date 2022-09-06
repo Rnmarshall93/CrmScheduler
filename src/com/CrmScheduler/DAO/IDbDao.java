@@ -8,7 +8,7 @@ public interface IDbDao {
 
     void createdDbLog(DbLog dbLog);
 
-    DbLog getDbLog(int dbLogId);
+    DbLog getDbLog(long dbLogId);
 
     ArrayList<DbLog> getAllDbLogs();
 
