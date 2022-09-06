@@ -203,8 +203,9 @@ public class CreateEditCustomerFormController {
 
         context.close();
 
-
-        FirstLevelDivision fld = iFirstLevelDivisionsDao.getAllFirstLevelDivisions().stream().filter(firstLevelDivision -> firstLevelDivision.getDivisionId() == existingCustomer.getDivisionId()).findFirst().get();
+        System.out.println("CUSTOMER ID " + existingCustomer.getCustomerId());
+        System.out.println("CUSTOMER DIVISION ID " + existingCustomer.getDivisionId());
+        FirstLevelDivision fld = iFirstLevelDivisionsDao.getFirstLevelDivision(existingCustomer.getDivisionId());
         inputDivision.getSelectionModel().select(fld.getDivision());
         Country existingCountry = iCountriesDao.getAllCountries().stream().filter(country ->  country.getCountryId() == fld.getCountyId()).findFirst().orElse(null);
         inputCountry.getSelectionModel().select(existingCountry.getCountry());
@@ -214,7 +215,7 @@ public class CreateEditCustomerFormController {
         matchingDivisions.forEach(firstLevelDivision -> divisionNames.add(firstLevelDivision.getDivision()));
         inputDivision.setItems(divisionNames);
         this.setExistingCustomer(existingCustomer);
-        iCustomerDao.getAllCustomers().forEach(customer -> customer.setCustomerId((iCustomerDao.getAllCustomers().get(0).getDivisionId())));
+      //  iCustomerDao.getAllCustomers().forEach(customer -> customer.setCustomerId((iCustomerDao.getAllCustomers().get(0).getDivisionId())));
     }
 
     /**
