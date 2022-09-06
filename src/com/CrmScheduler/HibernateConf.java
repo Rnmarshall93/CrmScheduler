@@ -37,6 +37,7 @@ public class HibernateConf {
                 settings.put(Environment.PASS, dbPass);
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 
+
                 settings.put(Environment.SHOW_SQL, "false");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
