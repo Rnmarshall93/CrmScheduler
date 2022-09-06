@@ -17,7 +17,7 @@ public class DbLog {
     @Column(name = "WasSuccessful")
     private String wasSuccessful;
     @Column(name = "TimeElapsed")
-    private int timeElapsed;
+    private long timeElapsed;
 
     public int getLogId() {
         return logId;
@@ -43,15 +43,15 @@ public class DbLog {
         this.wasSuccessful = wasSuccessful;
     }
 
-    public int getTimeElapsed() {
+    public long getTimeElapsed() {
         return timeElapsed;
     }
 
-    public void setTimeElapsed(int timeElapsed) {
+    public void setTimeElapsed(long timeElapsed) {
         this.timeElapsed = timeElapsed;
     }
 
-    public DbLog(int logId, String methodSignature, String wasSuccessful, int timeElapsed) {
+    public DbLog(int logId, String methodSignature, String wasSuccessful, long timeElapsed) {
         this.logId = logId;
         this.methodSignature = methodSignature;
         this.wasSuccessful = wasSuccessful;
