@@ -52,6 +52,7 @@ public class HibernateConf {
                 configuration.addAnnotatedClass(Country.class);
                 configuration.addAnnotatedClass(Appointment.class);
                 configuration.addAnnotatedClass(Contact.class);
+                configuration.addAnnotatedClass(DbLog.class);
                // java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
