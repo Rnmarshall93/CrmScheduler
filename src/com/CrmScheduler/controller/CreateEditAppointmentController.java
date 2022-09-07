@@ -7,6 +7,7 @@ import com.CrmScheduler.DAO.ICustomerDao;
 import com.CrmScheduler.DAO.CustomerDaoImplSql;
 import com.CrmScheduler.HelperUtilties.TimeTools;
 import com.CrmScheduler.SpringConf;
+import com.CrmScheduler.entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,10 +19,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.CrmScheduler.entity.Appointment;
-import com.CrmScheduler.entity.Contact;
-import com.CrmScheduler.entity.DetailedAppointment;
-import com.CrmScheduler.entity.CrmUser;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.Timestamp;
@@ -370,8 +367,9 @@ public class CreateEditAppointmentController {
 
                 AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
                 IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
-                context.close();
+                ICustomerDao iCustomerDao = context.getBean(ICustomerDao.class);
 
+                context.close();
                 iAppointmentDao.updateAppointment(Integer.parseInt(inputAppointmentId.getText()), appointment);
                 returnToAppointmentForm();
             }
