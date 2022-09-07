@@ -1,7 +1,6 @@
 package com.CrmScheduler.DAO;
 
 import com.CrmScheduler.HibernateConf;
-import com.CrmScheduler.entity.Country;
 import com.CrmScheduler.entity.DbLog;
 import org.hibernate.Session;
 import org.hibernate.query.Query;

@@ -38,8 +38,8 @@ public class FirstLevelDivisionsDaoImplSql implements IFirstLevelDivisionsDao {
             session.getTransaction().commit();
             session.close();
 
-        } catch (Exception exc) {
-            Alert alert = new Alert(Alert.AlertType.ERROR,exc.getLocalizedMessage(), ButtonType.OK);
+        } catch (Exception ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR,ex.getLocalizedMessage(), ButtonType.OK);
             alert.showAndWait();
         }
 

@@ -1,21 +1,14 @@
 package com.CrmScheduler.DAO;
 
 import com.CrmScheduler.HibernateConf;
-import com.CrmScheduler.entity.Contact;
-import com.CrmScheduler.entity.Customer;
+import com.CrmScheduler.entity.Country;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import com.CrmScheduler.entity.Country;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Implementation in sql of the Countries com.CrmScheduler.DAO

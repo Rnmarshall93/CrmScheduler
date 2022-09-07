@@ -1,18 +1,13 @@
 package com.CrmScheduler.DAO;
 
 import com.CrmScheduler.HibernateConf;
-import javafx.collections.FXCollections;
+import com.CrmScheduler.entity.Appointment;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import com.CrmScheduler.entity.Appointment;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -32,13 +27,12 @@ public class AppointmentDaoImplSql implements IAppointmentDao {
         {
             Session session = HibernateConf.getSessionFactory().openSession();
             session.beginTransaction();
-
             session.save(newAppointment);
 
             session.getTransaction().commit();
             session.close();
-        } catch (Exception exc) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, exc.getLocalizedMessage(), ButtonType.OK);
+        } catch (Exception ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, ex.getLocalizedMessage(), ButtonType.OK);
             alert.showAndWait();
         }
 

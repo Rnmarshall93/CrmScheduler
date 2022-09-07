@@ -56,6 +56,7 @@ public class CustomerDaoImplSql implements ICustomerDao {
     public Customer getCustomer(int customerId) {
         try{
             Session session = HibernateConf.getSessionFactory().openSession();
+            session.beginTransaction();
             Customer foundCustomer = session.get(Customer.class, customerId);
             session.getTransaction().commit();
             session.close();
@@ -126,6 +127,7 @@ public class CustomerDaoImplSql implements ICustomerDao {
     public void deleteCustomer(int customerId) {
         try {
             Session session = HibernateConf.getSessionFactory().openSession();
+            session.beginTransaction();
             Customer foundCustomer = session.get(Customer.class, customerId);
             session.delete(foundCustomer);
             session.getTransaction().commit();

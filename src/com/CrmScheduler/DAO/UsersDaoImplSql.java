@@ -1,14 +1,13 @@
 package com.CrmScheduler.DAO;
 
-import com.CrmScheduler.HibernateConf;
 import com.CrmScheduler.HelperUtilties.LanguageSettings;
+import com.CrmScheduler.HibernateConf;
 import com.CrmScheduler.SpringConf;
+import com.CrmScheduler.entity.CrmUser;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import com.CrmScheduler.entity.CrmUser;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
