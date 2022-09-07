@@ -3,6 +3,7 @@ package com.CrmScheduler.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * The model class for a Customer.
@@ -64,6 +65,11 @@ public class Customer {
      */
     @Column(name = "Division_Id")
     private int divisionId;
+
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Customer_ID", referencedColumnName = "Customer_ID")
+    private List<Appointment> customerAppointments;
 
     /**
      * getter for customerId.
@@ -225,7 +231,15 @@ public class Customer {
         this.divisionId = divisionId;
     }
 
-    public Customer(int customerId, String customerName, String address, String postalCode, String phone, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int divisionId) {
+    public List<Appointment> getAppointments() {
+        return customerAppointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.customerAppointments = appointments;
+    }
+
+    public Customer(int customerId, String customerName, String address, String postalCode, String phone, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int divisionId, List<Appointment> customerAppointments) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -236,6 +250,7 @@ public class Customer {
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
         this.divisionId = divisionId;
+        this.customerAppointments = customerAppointments;
     }
 
     public Customer() {
