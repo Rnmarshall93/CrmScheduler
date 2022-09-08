@@ -32,13 +32,6 @@ import java.util.stream.Collectors;
  */
 public class ReportsController {
 
-    public boolean canConstruct(String ransomNote, String magazine) {
-        for(int i = 0; i < magazine.length(); i++)
-        {
-            magazine.indexOf(0) ;
-        }
-        return false;
-    }
     /**
      * Textarea that displays the month and type results.
      */
@@ -170,7 +163,6 @@ public class ReportsController {
 
             TimeTools timeTools = new TimeTools();
 
-            String s = LocalDateTime.now().getMonth().toString();
             ObservableList<Appointment> matchingAppointmentsList = FXCollections.observableArrayList();
             iAppointmentDao.getAllAppointments().stream().filter(appointment -> timeTools.ConvertUtcToSystemTime(appointment.getStart()).toLocalDateTime().getMonth().toString().equals(selectedMonth.toUpperCase())
                     && appointment.getType().equals(selectedType)).forEach(
