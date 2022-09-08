@@ -50,8 +50,6 @@ public class UsersDaoImplSql implements IUserDao {
 
     @Override
     public CrmUser getUser(String username, String password) {
-        AnnotationConfigApplicationContext context =new AnnotationConfigApplicationContext(SpringConf.class);
-
         try
         {
             Session session = HibernateConf.getSessionFactory().openSession();
@@ -77,27 +75,20 @@ public class UsersDaoImplSql implements IUserDao {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "No accounts found, please check your username and password.", ButtonType.OK);
                     alert.setTitle("No accounts found");
                     alert.showAndWait();
-                } else if (languageSettings.getSystemLanguage() == "french") {
+                } else {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Aucun compte trouvé, veuillez vérifier votre nom d'utilisateur et votre mot de passe.", ButtonType.OK);
                     alert.setTitle("Aucun compte trouvé");
-                    alert.showAndWait();
-                }
-                //default to english
-                else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "No accounts found, please check your username and password.", ButtonType.OK);
-                    alert.setTitle("No accounts found");
                     alert.showAndWait();
                 }
             }
         }
 
-            catch(Exception ex)
+        catch(Exception ex)
     {
         if (LanguageSettings.getInstance().getSystemLanguage() == "english") {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't get the user because the database couldn't be established. ", ButtonType.OK);
             alert.showAndWait();
         } else {
-
             Alert alert = new Alert(Alert.AlertType.ERROR, "Impossible d'obtenir l'utilisateur car la base de données n'a pas pu être établie.", ButtonType.OK);
             alert.showAndWait();
         }
