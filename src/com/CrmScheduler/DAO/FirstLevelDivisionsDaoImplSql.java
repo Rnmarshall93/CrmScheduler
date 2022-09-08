@@ -1,18 +1,13 @@
 package com.CrmScheduler.DAO;
 
 import com.CrmScheduler.HibernateConf;
-import com.CrmScheduler.entity.Contact;
+import com.CrmScheduler.entity.FirstLevelDivision;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import com.CrmScheduler.entity.FirstLevelDivision;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**

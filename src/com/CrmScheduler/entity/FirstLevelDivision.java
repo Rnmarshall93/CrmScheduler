@@ -2,7 +2,6 @@ package com.CrmScheduler.entity;
 
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.sql.Date;
 
 /**

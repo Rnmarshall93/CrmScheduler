@@ -5,7 +5,6 @@ import com.CrmScheduler.DAO.ICustomerDao;
 import com.CrmScheduler.SpringConf;
 import com.CrmScheduler.entity.CrmUser;
 import com.CrmScheduler.entity.DetailedCustomer;
-import com.CrmScheduler.HelperUtilties.ImpendingAppointmentSingleton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -176,11 +175,6 @@ public class CustomerManagerController {
 
         ICustomerDao.getAllCustomers().forEach(n -> foundCustomers.add(new DetailedCustomer(n)));
         buildTable(foundCustomers);
-        if (ImpendingAppointmentSingleton.getInstance().getFoundAppointment() != null) {
-            Appointment displayAppointment = ImpendingAppointmentSingleton.getInstance().getFoundAppointment();
-            labelImpendingAppointment.setText("As of login, there was an appointment within 15 minutes. Appointment ID:" + displayAppointment.getAppointmentId() + " starting at " + ImpendingAppointmentSingleton.getInstance().getFoundAppointment().getStart());
-        } else
-            labelImpendingAppointment.setText("As of login, there were no impending appointments");
     }
 
     public void filterCustomers()

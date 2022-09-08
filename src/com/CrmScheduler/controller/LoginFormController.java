@@ -2,18 +2,15 @@ package com.CrmScheduler.controller;
 
 
 import com.CrmScheduler.DAO.IUserDao;
-import com.CrmScheduler.HelperUtilties.ImpendingAppointmentSingleton;
 import com.CrmScheduler.HelperUtilties.LanguageSettings;
 import com.CrmScheduler.SpringConf;
+import com.CrmScheduler.entity.CrmUser;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import com.CrmScheduler.entity.CrmUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.time.ZoneId;
@@ -22,6 +19,7 @@ import java.time.ZoneId;
  * The com.CrmScheduler.controller for LoginForm. All controls will display in english or french depending on the users language setting. This includes the window title.
  */
 public class LoginFormController {
+
 
     /**
      * The textfield responsible for getting the username to attempt a login with
@@ -90,10 +88,6 @@ public class LoginFormController {
         LanguageSettings languageSettings = LanguageSettings.getInstance();
         ZoneId zoneId = ZoneId.systemDefault();
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
-        IUserDao dao = context.getBean(IUserDao.class);
-        context.close();
-
         //setup the controls based on whether or not the user's language is english or french
         if(languageSettings.getSystemLanguage() == "english")
         {
@@ -129,16 +123,6 @@ public class LoginFormController {
                 return;
             }
             if (verifiedUser != null) {
-          //      IAppointmentDao IAppointmentDao = new AppointmentDaoImplSql();
-            //    Appointment impendingAppointment = IAppointmentDao.getAllAppointments().stream().filter(appointment -> appointment.isAppointmentWithinWarningPeriod.test(appointment)).findFirst().orElse(null);
-
-         //       ImpendingAppointmentSingleton.getInstance().setFoundAppointment(impendingAppointment);
-                if (ImpendingAppointmentSingleton.getInstance().getFoundAppointment() != null) {
-                 //   Alert alert = new Alert(Alert.AlertType.WARNING, "There is an appointment within 15 minutes. Appointment ID:" + impendingAppointment.getAppointmentId() + " " + impendingAppointment.getStart(), ButtonType.OK);
-                   // alert.setTitle("Approaching appointment warning");
-                    //alert.showAndWait();
-                }
-
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
                 Parent managementWindow = fxmlLoader.load();
                 Scene ModifyPartScene = new Scene(managementWindow);

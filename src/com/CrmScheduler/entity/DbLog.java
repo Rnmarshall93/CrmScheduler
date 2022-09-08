@@ -1,7 +1,5 @@
 package com.CrmScheduler.entity;
 
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
 
 @Entity

@@ -1,9 +1,15 @@
 package com.CrmScheduler.controller;
 
 
-import com.CrmScheduler.DAO.*;
+import com.CrmScheduler.DAO.ICountriesDao;
+import com.CrmScheduler.DAO.ICustomerDao;
+import com.CrmScheduler.DAO.IFirstLevelDivisionsDao;
 import com.CrmScheduler.HelperUtilties.TimeTools;
 import com.CrmScheduler.SpringConf;
+import com.CrmScheduler.entity.Country;
+import com.CrmScheduler.entity.CrmUser;
+import com.CrmScheduler.entity.Customer;
+import com.CrmScheduler.entity.FirstLevelDivision;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,13 +21,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.CrmScheduler.entity.Country;
-import com.CrmScheduler.entity.Customer;
-import com.CrmScheduler.entity.FirstLevelDivision;
-import com.CrmScheduler.entity.CrmUser;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import javax.swing.*;
 import java.sql.Timestamp;
 import java.time.Instant;
 
@@ -199,7 +200,6 @@ public class CreateEditCustomerFormController {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
         ICountriesDao iCountriesDao = context.getBean(ICountriesDao.class);
         IFirstLevelDivisionsDao iFirstLevelDivisionsDao = context.getBean(IFirstLevelDivisionsDao.class);
-        ICustomerDao iCustomerDao = context.getBean(ICustomerDao.class);
 
         context.close();
 
@@ -215,7 +215,6 @@ public class CreateEditCustomerFormController {
         matchingDivisions.forEach(firstLevelDivision -> divisionNames.add(firstLevelDivision.getDivision()));
         inputDivision.setItems(divisionNames);
         this.setExistingCustomer(existingCustomer);
-      //  iCustomerDao.getAllCustomers().forEach(customer -> customer.setCustomerId((iCustomerDao.getAllCustomers().get(0).getDivisionId())));
     }
 
     /**

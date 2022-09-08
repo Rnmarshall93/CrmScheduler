@@ -1,11 +1,8 @@
 package com.CrmScheduler.controller;
 
 
-import com.CrmScheduler.DAO.AppointmentDaoImplSql;
 import com.CrmScheduler.DAO.IAppointmentDao;
 import com.CrmScheduler.DAO.IContactsDao;
-import com.CrmScheduler.DAO.ContactsDaoImplSql;
-import com.CrmScheduler.HelperUtilties.ImpendingAppointmentSingleton;
 import com.CrmScheduler.HelperUtilties.TimeTools;
 import com.CrmScheduler.SpringConf;
 import javafx.collections.FXCollections;
@@ -176,11 +173,6 @@ public class AppointmentManagerController {
 
         Stage openWindow = (Stage) Stage.getWindows().stream().filter((window) -> window.isShowing()).findFirst().get();
         openWindow.setTitle("Appointment Manager");
-        if (ImpendingAppointmentSingleton.getInstance().getFoundAppointment() != null) {
-            Appointment displayAppointment = ImpendingAppointmentSingleton.getInstance().getFoundAppointment();
-            labelImpendingAppointment.setText("As of login, there was an appointment within 15 minutes. Appointment ID:" + displayAppointment.getAppointmentId() + " starting at " + ImpendingAppointmentSingleton.getInstance().getFoundAppointment().getStart());
-        } else
-            labelImpendingAppointment.setText("As of login, there were no impending appointments");
     }
 
     private ObservableList<Appointment> getAppointmentsMatchingTitle()

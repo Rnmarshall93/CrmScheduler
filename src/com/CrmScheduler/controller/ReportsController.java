@@ -1,12 +1,13 @@
 package com.CrmScheduler.controller;
 
 
-import com.CrmScheduler.DAO.AppointmentDaoImplSql;
 import com.CrmScheduler.DAO.IAppointmentDao;
 import com.CrmScheduler.DAO.IContactsDao;
-import com.CrmScheduler.DAO.ContactsDaoImplSql;
 import com.CrmScheduler.HelperUtilties.TimeTools;
 import com.CrmScheduler.SpringConf;
+import com.CrmScheduler.entity.Appointment;
+import com.CrmScheduler.entity.CrmUser;
+import com.CrmScheduler.entity.DetailedAppointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,9 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import com.CrmScheduler.entity.Appointment;
-import com.CrmScheduler.entity.DetailedAppointment;
-import com.CrmScheduler.entity.CrmUser;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.Timestamp;

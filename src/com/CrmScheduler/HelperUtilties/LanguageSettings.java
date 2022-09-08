@@ -5,6 +5,7 @@ import java.util.Locale;
 /**
  * Singleton class responsible for keeping track of the user's language settings.
  */
+
 public class LanguageSettings {
 
     /**
