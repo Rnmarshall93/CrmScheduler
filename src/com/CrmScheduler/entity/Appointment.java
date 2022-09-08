@@ -17,20 +17,16 @@ import java.util.function.Predicate;
 @Table(name = "appointments")
 public class Appointment {
 
-    @Transient
-    protected TimeTools timeTools = new TimeTools();
-
-
     /**
      ** Determines if the newAppointment is after the existingAppointment. Returns true if the newAppointment is after the existingAppointment.
      */
     @Transient
-    public BiPredicate<Timestamp,Timestamp> isAfter = (newAppointment,existingAppointment) -> newAppointment.compareTo(existingAppointment) >= 0;
+    public BiPredicate<Timestamp,Timestamp> isAfter = (newAppointment, existingAppointment) -> newAppointment.compareTo(existingAppointment) >= 0;
     /**
      * Determines if the newAppointment is before the existingAppointment/ Returns true if the newAppointment is before the existingAppointment
      */
     @Transient
-    public BiPredicate<Timestamp,Timestamp> isBefore = (newAppointment,existingAppointment) -> newAppointment.compareTo(existingAppointment) <= 0;
+    public BiPredicate<Timestamp,Timestamp> isBefore = (newAppointment, existingAppointment) -> newAppointment.compareTo(existingAppointment) <= 0;
     /**
      * Predicate used to validate that an appointments Start occurs after its end.
      */
@@ -41,20 +37,21 @@ public class Appointment {
      */
     @Transient
     public Predicate<Appointment> startAndEndSame = (appointment -> appointment.getStart().equals(appointment.getEnd()));
+
     /**
-     * Predicate used to determine if an appointment is conflicting with an already existing customer. If the customer is scheduled during the newly scheduled time, it will return false.
-     * If the contact is not busy during the start and end times, the predicate will return true.
+     * Determines if the user already has an existing appointment scheduled that would be in the same time range.
+     * @param newAppointment The new appointment being created
+     * @param existingAppointment The existing appointment to check against
+     * @return true if the user does not have a conflicting appointment. False if the user does.
      */
-    @Transient
-    public BiPredicate<Appointment,Appointment> isConflictingWithCustomer = (newAppointment, existingAppointment) ->
-            newAppointment.isAfter.test(newAppointment.getStart(),existingAppointment.getStart()) && newAppointment.isBefore.test(newAppointment.getStart(),existingAppointment.getEnd()) && newAppointment.getCustomerId() == existingAppointment.getCustomerId()
-                    || newAppointment.isAfter.test(newAppointment.getEnd(),existingAppointment.getStart()) && newAppointment.isBefore.test(newAppointment.getEnd(),existingAppointment.getEnd()) && newAppointment.getCustomerId() == existingAppointment.getCustomerId();
-    /**
-     * Predicate used to determine if an appointment is within the warning period (Within 15 minutes). returns true if the appointment is occuring within 15 minutes of the users local time.
-     */
-    @Transient
-    public Predicate<Appointment> isAppointmentWithinWarningPeriod = appointment -> appointment.getStart().after(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now()))) &&
-            appointment.getStart().before(timeTools.ConvertDateToUTC(Timestamp.valueOf(LocalDateTime.now().plusMinutes(15))));
+    public boolean isConflictingWithAnotherAppointment(Appointment newAppointment, Appointment existingAppointment)
+    {
+        if(newAppointment.isAfter.test(newAppointment.getStart(), existingAppointment.getStart()))
+            if(newAppointment.isAfter.test(newAppointment.getEnd(), existingAppointment.getEnd()))
+                if(newAppointment.getCustomerId() == existingAppointment.getCustomerId())
+                return true;
+        return false;
+    }
     /**
      * the unique ID of the appointment.
      */

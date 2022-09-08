@@ -237,7 +237,9 @@ public class CreateEditAppointmentController {
         IAppointmentDao iAppointmentDao = context.getBean(IAppointmentDao.class);
         context.close();
 
-        Appointment conflictingCustomerAppointment = iAppointmentDao.getAllAppointments().stream().filter(existingAppointment -> existingAppointment.getAppointmentId() != appointment.getAppointmentId() && existingAppointment.isConflictingWithCustomer.test(appointment, existingAppointment)).findFirst().orElse(null);
+        Appointment conflictingCustomerAppointment = iAppointmentDao.getAllAppointments().stream().filter(
+                existingAppointment -> existingAppointment.getAppointmentId() != appointment.getAppointmentId()
+                        && existingAppointment.isConflictingWithAnotherAppointment(appointment, existingAppointment)).findFirst().orElse(null);
         if (conflictingCustomerAppointment != null) {
             TimeTools timeTools = new TimeTools();
 

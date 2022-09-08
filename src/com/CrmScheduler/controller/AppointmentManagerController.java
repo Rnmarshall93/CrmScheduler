@@ -98,17 +98,27 @@ public class AppointmentManagerController {
 
 
     /**
-     * used to keep track of weekly appointments radio button
+     * used to toggle all appointments occurring during that day.
+     */
+    public RadioButton radioFilterToday;
+
+    /**
+     * used to toggle all appointments within the week.
      */
     public RadioButton radioFilterWeek;
 
     /**
-     * used to keep track of the monthly appointments radio button
+     * used to toggle all appointments within the month.
      */
     public RadioButton radioFilterMonth;
 
+    /**
+     * Input element for filtering appointments by their title
+     */
     public TextField textboxFilterAppointments;
+
     private CrmUser loggedInUser;
+
     /**
      * getter for the loggedInUser
      * @return the logged in user
@@ -225,10 +235,36 @@ public class AppointmentManagerController {
             appointmentsFound = filterAppointmentsWithinWeek(appointmentsFound);
         }
 
+        if(radioFilterToday.isSelected())
+        {
+            appointmentsFound = filterAppointmentsWithinDay(appointmentsFound);
+        }
+
         ObservableList<DetailedAppointment> filteredDetailedAppointments = FXCollections.observableArrayList();
         appointmentsFound.forEach(appointment -> filteredDetailedAppointments.add(new DetailedAppointment(appointment)));
         buildTable(filteredDetailedAppointments);
 
+    }
+
+    private ObservableList<Appointment> filterAppointmentsWithinDay(ObservableList<Appointment> appointments) {
+        ObservableList<Appointment> appointmentsWithinWeek = FXCollections.observableArrayList();
+
+        Calendar currentDateCal = Calendar.getInstance();
+
+        Instant timeInstant = (Timestamp.from(Instant.now())).toInstant();
+        currentDateCal.setTime(Date.from(timeInstant));
+
+        for (Appointment appointment : appointments) {
+            //convert the current time to calendar
+            Calendar appointmentCalTime = Calendar.getInstance();
+            TimeTools timeTools = new TimeTools();
+            Timestamp startInLocalTime = timeTools.ConvertUtcToSystemTime(appointment.getStart());
+            appointmentCalTime.setTime(Date.from(startInLocalTime.toInstant()));
+            if (appointmentCalTime.get(Calendar.DATE) == currentDateCal.get(Calendar.DATE)) {
+                appointmentsWithinWeek.add(new DetailedAppointment(appointment));
+            }
+        }
+        return appointmentsWithinWeek;
     }
 
     public ObservableList<Appointment> filterAppointmentsWithinWeek(ObservableList <Appointment> appointments) {
@@ -236,14 +272,18 @@ public class AppointmentManagerController {
 
         Calendar currentDateCal = Calendar.getInstance();
 
-        TimeTools timeTools = new TimeTools();
-        Instant timeInstant = timeTools.ConvertUtcToSystemTime(Timestamp.from(Instant.now())).toInstant();
+        Instant timeInstant = (Timestamp.from(Instant.now())).toInstant();
         currentDateCal.setTime(Date.from(timeInstant));
 
         for (Appointment appointment : appointments) {
             //convert the current time to calendar
+
+
+            TimeTools timeTools = new TimeTools();
+            Timestamp startInLocalTime = timeTools.ConvertUtcToSystemTime(appointment.getStart());
+
             Calendar appointmentCalTime = Calendar.getInstance();
-            appointmentCalTime.setTime(Date.from(appointment.getStart().toInstant()));
+            appointmentCalTime.setTime(startInLocalTime);
 
             if (appointmentCalTime.get(Calendar.WEEK_OF_YEAR) == currentDateCal.get(Calendar.WEEK_OF_YEAR)) {
                 appointmentsWithinWeek.add(new DetailedAppointment(appointment));
