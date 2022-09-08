@@ -32,3 +32,4 @@ target/
 .ds_Store
 .idea/
 login_activity.txt
+*.kotlin_module
