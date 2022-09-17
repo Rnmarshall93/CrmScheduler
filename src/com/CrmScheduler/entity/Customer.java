@@ -66,6 +66,9 @@ public class Customer {
     @Column(name = "Division_Id")
     private int divisionId;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Division_ID")
+    private FirstLevelDivision firstLevelDivision;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "Customer_ID", referencedColumnName = "Customer_ID")
@@ -229,6 +232,22 @@ public class Customer {
      */
     public void setDivisionId(int divisionId) {
         this.divisionId = divisionId;
+    }
+
+    public FirstLevelDivision getFirstLevelDivision() {
+        return firstLevelDivision;
+    }
+
+    public void setFirstLevelDivision(FirstLevelDivision firstLevelDivision) {
+        this.firstLevelDivision = firstLevelDivision;
+    }
+
+    public List<Appointment> getCustomerAppointments() {
+        return customerAppointments;
+    }
+
+    public void setCustomerAppointments(List<Appointment> customerAppointments) {
+        this.customerAppointments = customerAppointments;
     }
 
     public List<Appointment> getAppointments() {
