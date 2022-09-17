@@ -16,6 +16,9 @@ public class DetailedCustomer extends Customer {
         return division;
     }
 
+    public void setDivision(String division) {
+        this.division = division;
+    }
     private String division;
 
 
@@ -23,19 +26,17 @@ public class DetailedCustomer extends Customer {
     {
         TimeTools timeTools = new TimeTools();
 
-        this.setCustomerId(c.getCustomerId());
-        this.setCustomerName(c.getCustomerName());
-        this.setAddress(c.getAddress());
-        this.setPostalCode(c.getPostalCode());
-        this.setPhone(c.getPhone());
-        this.setCreateDate(timeTools.ConvertUtcToSystemTime(c.getCreateDate()));
-        this.setCreatedBy(c.getCreatedBy());
-        this.setLastUpdate(timeTools.ConvertUtcToSystemTime(c.getLastUpdate()));
-        this.setLastUpdatedBy(c.getLastUpdatedBy());
-        this.setDivisionId(c.getDivisionId());
-        IFirstLevelDivisionsDao IFirstLevelDivisionsDao = new FirstLevelDivisionsDaoImplSql();
-        FirstLevelDivision customersDivision = IFirstLevelDivisionsDao.getFirstLevelDivision(c.getDivisionId());
-        this.division = customersDivision.getDivision();
+        setCustomerId(c.getCustomerId());
+        setCustomerName(c.getCustomerName());
+        setAddress(c.getAddress());
+        setPostalCode(c.getPostalCode());
+        setPhone(c.getPhone());
+        setCreateDate(timeTools.ConvertUtcToSystemTime(c.getCreateDate()));
+        setCreatedBy(c.getCreatedBy());
+        setLastUpdate(timeTools.ConvertUtcToSystemTime(c.getLastUpdate()));
+        setLastUpdatedBy(c.getLastUpdatedBy());
+        setDivisionId(c.getDivisionId());
+        setDivision(c.getFirstLevelDivision().getDivision());
 
     }
 
