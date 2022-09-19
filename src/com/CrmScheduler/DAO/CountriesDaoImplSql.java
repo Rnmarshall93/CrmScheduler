@@ -2,6 +2,7 @@ package com.CrmScheduler.DAO;
 
 import com.CrmScheduler.HibernateConf;
 import com.CrmScheduler.entity.Country;
+import com.CrmScheduler.entity.FirstLevelDivision;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.hibernate.Session;
@@ -90,6 +91,31 @@ public class CountriesDaoImplSql implements ICountriesDao {
             alert.showAndWait();
             return null;
         }
+    }
+
+    @Override
+    public Country getCountryMatchingName(String countryName) {
+        Session session = HibernateConf.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        /*
+        Session session = HibernateConf.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        ArrayList<FirstLevelDivision> foundFirstLevelDivisions = new ArrayList<>();
+        Query query = session.createQuery("from FirstLevelDivision where Country_ID = :countryId");
+        query.setParameter("countryId", countryId);
+        foundFirstLevelDivisions.addAll(query.list());
+
+        session.getTransaction().commit();
+        session.close();
+         */
+        Query query = session.createQuery("from Country where country = :countryName");
+        query.setParameter("countryName", countryName);
+        Country foundCountry = (Country) query.getSingleResult();
+        session.getTransaction().commit();
+        session.close();
+        return foundCountry;
     }
 
     /**

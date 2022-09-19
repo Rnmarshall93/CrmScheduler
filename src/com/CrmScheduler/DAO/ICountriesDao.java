@@ -1,6 +1,7 @@
 package com.CrmScheduler.DAO;
 
 import com.CrmScheduler.entity.Country;
+import com.CrmScheduler.entity.FirstLevelDivision;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,9 @@ public interface ICountriesDao {
      * @return returns an ArrayList of Countries.
      */
     ArrayList<Country> getAllCountries();
+
+
+    Country getCountryMatchingName(String countryName);
 
     /**
      * Updates a country based on Id.
