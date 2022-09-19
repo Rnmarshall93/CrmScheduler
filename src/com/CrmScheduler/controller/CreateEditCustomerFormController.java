@@ -25,6 +25,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 
 /**
  * Controller for CreateEditCustomerForm
@@ -207,10 +208,9 @@ public class CreateEditCustomerFormController {
         System.out.println("CUSTOMER DIVISION ID " + existingCustomer.getDivisionId());
         FirstLevelDivision fld = iFirstLevelDivisionsDao.getFirstLevelDivision(existingCustomer.getDivisionId());
         inputDivision.getSelectionModel().select(fld.getDivision());
-        Country existingCountry = iCountriesDao.getAllCountries().stream().filter(country ->  country.getCountryId() == fld.getCountyId()).findFirst().orElse(null);
+        Country existingCountry = iCountriesDao.getAllCountries().stream().filter(country ->  country.getCountryId() == existingCustomer.getFirstLevelDivision().getCountry().getCountryId()).findFirst().orElse(null);
         inputCountry.getSelectionModel().select(existingCountry.getCountry());
         ObservableList<FirstLevelDivision> matchingDivisions = FXCollections.observableArrayList();
-        iFirstLevelDivisionsDao.getAllFirstLevelDivisions().stream().filter(firstLevelDivision -> firstLevelDivision.getCountyId() == fld.getCountyId()).forEach(firstLevelDivision -> matchingDivisions.add(firstLevelDivision));
         ObservableList<String> divisionNames = FXCollections.observableArrayList();
         matchingDivisions.forEach(firstLevelDivision -> divisionNames.add(firstLevelDivision.getDivision()));
         inputDivision.setItems(divisionNames);
@@ -326,11 +326,13 @@ public class CreateEditCustomerFormController {
         context.close();
 
         String selectedOption = (String)inputCountry.getValue();
-        int selectedCountryId = iCountriesDao.getAllCountries().stream().filter(x -> x.getCountry().equals(selectedOption)).findFirst().get().getCountryId();
 
+        int selectedCountryId = iCountriesDao.getAllCountries().stream().filter(x -> x.getCountry().equals(selectedOption)).findFirst().get().getCountryId();
+        ArrayList<FirstLevelDivision>  matchingFld = iFirstLevelDivisionsDao.getFirstLevelDivisionsInCountry(selectedCountryId);
 
         ObservableList<String> matchingFirstLevelDivisions = FXCollections.observableArrayList();
-        iFirstLevelDivisionsDao.getAllFirstLevelDivisions().stream().filter(x -> x.getCountyId() == selectedCountryId).forEach((firstLevelDivision -> matchingFirstLevelDivisions.add(firstLevelDivision.getDivision())));
+        matchingFld.forEach(firstLevelDivision -> matchingFirstLevelDivisions.add(firstLevelDivision.getDivision()));
+
         inputDivision.setItems(matchingFirstLevelDivisions);
 
     }
