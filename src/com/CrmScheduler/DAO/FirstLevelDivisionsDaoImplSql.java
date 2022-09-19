@@ -93,6 +93,22 @@ public class FirstLevelDivisionsDaoImplSql implements IFirstLevelDivisionsDao {
         }
     }
 
+    @Override
+    public ArrayList<FirstLevelDivision> getFirstLevelDivisionsInCountry(int countryId) {
+        Session session = HibernateConf.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        ArrayList<FirstLevelDivision> foundFirstLevelDivisions = new ArrayList<>();
+        Query query = session.createQuery("from FirstLevelDivision where Country_ID = :countryId");
+        query.setParameter("countryId", countryId);
+        foundFirstLevelDivisions.addAll(query.list());
+
+        session.getTransaction().commit();
+        session.close();
+
+        return foundFirstLevelDivisions;
+    }
+
 
     /**
      * Updates a firstLevelDivision with new information from the firstLevelDivision param. Unused but implemented.

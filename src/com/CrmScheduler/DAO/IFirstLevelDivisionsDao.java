@@ -33,6 +33,9 @@ public interface IFirstLevelDivisionsDao {
      * @param divisionId the divisionId to match the FirstlevelDivision to.
      * @param firstLevelDivision the new information for the FirstLevelDivision.
      */
+
+    ArrayList<FirstLevelDivision> getFirstLevelDivisionsInCountry(int countryId);
+
     void updateDivision(int divisionId, FirstLevelDivision firstLevelDivision);
 
     /**

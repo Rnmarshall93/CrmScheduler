@@ -46,8 +46,20 @@ public class FirstLevelDivision {
     /**
      * the unique Id for the county associated with the FirstLevelDivision.
      */
-    @Column(name = "Country_ID")
-    private int countyId;
+   // @Column(name = "Country_ID")
+    //private int countyId;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Country_ID")
+    private Country country;
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
     /**
      * getter for divisionId.
@@ -149,17 +161,19 @@ public class FirstLevelDivision {
      * getter for countryId.
      * @return countryId.
      */
-    public int getCountyId() {
-        return countyId;
-    }
+  //  public int getCountyId() {
+     //   return countyId;
+    //}
 
     /**
      * setter for countryId.
      * @param countyId countryId.
      */
-    public void setCountyId(int countyId) {
-        this.countyId = countyId;
-    }
+   // public void setCountyId(int countyId) {
+     //   this.countyId = countyId;
+    //}
+
+
 
     public FirstLevelDivision() {
     }
@@ -171,7 +185,7 @@ public class FirstLevelDivision {
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
-        this.countyId = countyId;
+       // this.countyId = countyId;
     }
 
     @Override
@@ -183,7 +197,7 @@ public class FirstLevelDivision {
                 ", createdBy='" + createdBy + '\'' +
                 ", lastUpdate=" + lastUpdate +
                 ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
-                ", countyId=" + countyId +
+                //", countyId=" + countyId +
                 '}';
     }
 }
