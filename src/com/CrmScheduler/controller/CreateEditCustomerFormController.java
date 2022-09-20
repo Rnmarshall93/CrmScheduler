@@ -196,7 +196,7 @@ public class CreateEditCustomerFormController {
         inputAddress.setText(existingCustomer.getAddress());
         inputPostalCode.setText(existingCustomer.getPostalCode());
         inputPhone.setText(existingCustomer.getPhone());
-        inputDivisionId.setText((String.valueOf(existingCustomer.getDivisionId())));
+        inputDivisionId.setText((String.valueOf(existingCustomer.getFirstLevelDivision().getDivisionId())));
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
         ICountriesDao iCountriesDao = context.getBean(ICountriesDao.class);
@@ -204,9 +204,7 @@ public class CreateEditCustomerFormController {
 
         context.close();
 
-        System.out.println("CUSTOMER ID " + existingCustomer.getCustomerId());
-        System.out.println("CUSTOMER DIVISION ID " + existingCustomer.getDivisionId());
-        FirstLevelDivision fld = iFirstLevelDivisionsDao.getFirstLevelDivision(existingCustomer.getDivisionId());
+        FirstLevelDivision fld = existingCustomer.getFirstLevelDivision();
         inputDivision.getSelectionModel().select(fld.getDivision());
         Country existingCountry = iCountriesDao.getAllCountries().stream().filter(country ->  country.getCountryId() == existingCustomer.getFirstLevelDivision().getCountry().getCountryId()).findFirst().orElse(null);
         inputCountry.getSelectionModel().select(existingCountry.getCountry());
@@ -259,42 +257,44 @@ public class CreateEditCustomerFormController {
             TimeTools timeTools = new TimeTools();
 
             if (creatingNewCustomer()) {
-                Customer c = new Customer();
-                c.setCustomerId(Integer.parseInt(inputCustomerId.getText()));
-                c.setCustomerName(inputName.getText());
-                c.setAddress(inputAddress.getText());
-                c.setPhone(inputPhone.getText());
-                c.setPostalCode(inputPostalCode.getText());
-                c.setCreateDate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
-                c.setCreateDate(getExistingCustomer().getCreateDate());
-                c.setCreatedBy(getExistingCustomer().getCreatedBy());
-                c.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
-                c.setLastUpdatedBy(loggedInUser.getUserName());
-                c.setDivisionId((Integer.parseInt(inputDivisionId.getText())));
+                Customer newCustomer = new Customer();
+                newCustomer.setCustomerId(Integer.parseInt(inputCustomerId.getText()));
+                newCustomer.setCustomerName(inputName.getText());
+                newCustomer.setAddress(inputAddress.getText());
+                newCustomer.setPhone(inputPhone.getText());
+                newCustomer.setPostalCode(inputPostalCode.getText());
+                newCustomer.setCreateDate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                newCustomer.setCreateDate(getExistingCustomer().getCreateDate());
+                newCustomer.setCreatedBy(getExistingCustomer().getCreatedBy());
+                newCustomer.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                newCustomer.setLastUpdatedBy(loggedInUser.getUserName());
                 if (isFormInputValid()) {
 
                     AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
                     ICustomerDao iCustomerDao = context.getBean(ICustomerDao.class);
+                    IFirstLevelDivisionsDao iFirstLevelDivisionsDao = context.getBean(IFirstLevelDivisionsDao.class);
+                    newCustomer.setFirstLevelDivision(iFirstLevelDivisionsDao.getFirstLevelDivision(Integer.parseInt(inputDivisionId.getText())));
                     context.close();
-                    iCustomerDao.updateCustomer(c.getCustomerId(), c);
+                    iCustomerDao.updateCustomer(newCustomer.getCustomerId(), newCustomer);
                 }
 
             } else {
-                Customer c = new Customer();
-                c.setCustomerName(inputName.getText());
-                c.setAddress(inputAddress.getText());
-                c.setPhone(inputPhone.getText());
-                c.setPostalCode(inputPostalCode.getText());
-                c.setCreateDate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
-                c.setCreatedBy(loggedInUser.getUserName());
-                c.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
-                c.setLastUpdatedBy(loggedInUser.getUserName());
-                c.setDivisionId((Integer.parseInt(inputDivisionId.getText())));
+                Customer newCustomer = new Customer();
+                newCustomer.setCustomerName(inputName.getText());
+                newCustomer.setAddress(inputAddress.getText());
+                newCustomer.setPhone(inputPhone.getText());
+                newCustomer.setPostalCode(inputPostalCode.getText());
+                newCustomer.setCreateDate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                newCustomer.setCreatedBy(loggedInUser.getUserName());
+                newCustomer.setLastUpdate(timeTools.ConvertDateToUTC(Timestamp.from(Instant.now())));
+                newCustomer.setLastUpdatedBy(loggedInUser.getUserName());
 
                 AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
                 ICustomerDao iCustomerDao = context.getBean(ICustomerDao.class);
+                IFirstLevelDivisionsDao iFirstLevelDivisionsDao = context.getBean(IFirstLevelDivisionsDao.class);
+                newCustomer.setFirstLevelDivision(iFirstLevelDivisionsDao.getFirstLevelDivision(Integer.parseInt(inputDivisionId.getText())));
                 context.close();
-                iCustomerDao.addCustomer(c);
+                iCustomerDao.addCustomer(newCustomer);
 
             }
 
@@ -327,7 +327,7 @@ public class CreateEditCustomerFormController {
 
         String selectedOption = (String)inputCountry.getValue();
 
-        int selectedCountryId = iCountriesDao.getAllCountries().stream().filter(x -> x.getCountry().equals(selectedOption)).findFirst().get().getCountryId();
+        int selectedCountryId = iCountriesDao.getCountryMatchingName(selectedOption).getCountryId();
         ArrayList<FirstLevelDivision>  matchingFld = iFirstLevelDivisionsDao.getFirstLevelDivisionsInCountry(selectedCountryId);
 
         ObservableList<String> matchingFirstLevelDivisions = FXCollections.observableArrayList();
