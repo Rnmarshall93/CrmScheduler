@@ -60,11 +60,6 @@ public class Customer {
      */
     @Column(name="Last_Updated_By")
     private String lastUpdatedBy;
-    /**
-     * the unique Id for the division the customer lives in.
-     */
-    @Column(name = "Division_Id")
-    private int divisionId;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "Division_ID")
@@ -218,21 +213,11 @@ public class Customer {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    /**
-     * gets the unique divisionId for the division the customer belongs to.
-     * @return divisionId.
-     */
-    public int getDivisionId() {
-        return divisionId;
-    }
 
     /**
      * setter for the unique divisionId the customer belongs to.
      * @param divisionId the value to set divisionId to.
      */
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
-    }
 
     public FirstLevelDivision getFirstLevelDivision() {
         return firstLevelDivision;
@@ -268,7 +253,6 @@ public class Customer {
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
-        this.divisionId = divisionId;
         this.customerAppointments = customerAppointments;
     }
 
@@ -287,7 +271,6 @@ public class Customer {
                 ", createdBy='" + createdBy + '\'' +
                 ", lastUpdate=" + lastUpdate +
                 ", lastUpdatedBy='" + lastUpdatedBy + '\'' +
-                ", divisionId=" + divisionId +
                 '}';
     }
 }
