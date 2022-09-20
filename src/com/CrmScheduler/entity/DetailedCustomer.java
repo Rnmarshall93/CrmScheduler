@@ -20,7 +20,15 @@ public class DetailedCustomer extends Customer {
         this.division = division;
     }
     private String division;
+    private int divisionId;
 
+    public int getDivisionId() {
+        return divisionId;
+    }
+
+    public void setDivisionId(int divisionId) {
+        this.divisionId = divisionId;
+    }
 
     public DetailedCustomer(Customer c)
     {
@@ -35,7 +43,7 @@ public class DetailedCustomer extends Customer {
         setCreatedBy(c.getCreatedBy());
         setLastUpdate(timeTools.ConvertUtcToSystemTime(c.getLastUpdate()));
         setLastUpdatedBy(c.getLastUpdatedBy());
-        setDivisionId(c.getDivisionId());
+        setDivisionId(c.getFirstLevelDivision().getDivisionId());
         setDivision(c.getFirstLevelDivision().getDivision());
 
     }
