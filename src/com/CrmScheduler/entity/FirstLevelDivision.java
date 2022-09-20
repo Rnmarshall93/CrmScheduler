@@ -43,11 +43,6 @@ public class FirstLevelDivision {
      */
     @Column(name = "Last_Updated_By")
     private String lastUpdatedBy;
-    /**
-     * the unique Id for the county associated with the FirstLevelDivision.
-     */
-   // @Column(name = "Country_ID")
-    //private int countyId;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "Country_ID")
