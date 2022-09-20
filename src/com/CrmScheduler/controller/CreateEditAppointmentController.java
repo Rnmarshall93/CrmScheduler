@@ -262,7 +262,7 @@ public class CreateEditAppointmentController {
         {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/AppointmentManagerForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
-            Scene ModifyPartScene = new Scene(managementWindow);
+            Scene appointmentManagerScene = new Scene(managementWindow);
             Stage window = (Stage) inputType.getScene().getWindow();
             AppointmentManagerController controller = fxmlLoader.getController();
             controller.setLoggedInUser(this.loggedInUser);
@@ -278,7 +278,7 @@ public class CreateEditAppointmentController {
 
             if (getExistingAppointment() != null) {
             }
-            window.setScene(ModifyPartScene);
+            window.setScene(appointmentManagerScene);
             window.show();
         }
         catch (Exception ex)

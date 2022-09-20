@@ -295,11 +295,11 @@ public class ReportsController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
-            Scene ModifyPartScene = new Scene(managementWindow);
+            Scene customerManagementScene = new Scene(managementWindow);
             Stage window = (Stage) textAreaStats.getScene().getWindow();
             CustomerManagerController controller = fxmlLoader.getController();
             controller.setLoggedInUser(getLoggedInUser());
-            window.setScene(ModifyPartScene);
+            window.setScene(customerManagementScene);
             window.show();
         } catch (Exception ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);

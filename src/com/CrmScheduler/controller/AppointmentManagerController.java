@@ -434,12 +434,12 @@ public class AppointmentManagerController {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
-            Scene ModifyPartScene = new Scene(managementWindow);
+            Scene customerManagementScene = new Scene(managementWindow);
             Stage window = (Stage) buttonNewAppointment.getScene().getWindow();
             CustomerManagerController controller = fxmlLoader.getController();
             //pass the logged in user around
             controller.setLoggedInUser(getLoggedInUser());
-            window.setScene(ModifyPartScene);
+            window.setScene(customerManagementScene);
             window.show();
         }
         catch (Exception ex)
@@ -457,11 +457,11 @@ public class AppointmentManagerController {
         {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ReportsForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
-            Scene ModifyPartScene = new Scene(managementWindow);
+            Scene reportsScene = new Scene(managementWindow);
             Stage window = (Stage) buttonNewAppointment.getScene().getWindow();
             ReportsController controller = fxmlLoader.getController();
             controller.setLoggedInUser(getLoggedInUser());
-            window.setScene(ModifyPartScene);
+            window.setScene(reportsScene);
             window.show();
         }
         catch (Exception ex)

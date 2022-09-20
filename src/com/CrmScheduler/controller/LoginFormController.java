@@ -125,11 +125,11 @@ public class LoginFormController {
             if (verifiedUser != null) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
                 Parent managementWindow = fxmlLoader.load();
-                Scene ModifyPartScene = new Scene(managementWindow);
+                Scene managementForm = new Scene(managementWindow);
                 Stage window = (Stage) inputUsername.getScene().getWindow();
                 CustomerManagerController controller = fxmlLoader.getController();
                 controller.setLoggedInUser(verifiedUser);
-                window.setScene(ModifyPartScene);
+                window.setScene(managementForm);
                 window.show();
             }
 

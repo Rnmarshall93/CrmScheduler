@@ -171,11 +171,11 @@ public class CreateEditCustomerFormController {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/ManagementForm.fxml"));
             Parent managementWindow = fxmlLoader.load();
-            Scene ModifyPartScene = new Scene(managementWindow);
+            Scene managmentScene = new Scene(managementWindow);
             Stage window = (Stage) inputCustomerId.getScene().getWindow();
             CustomerManagerController controller = fxmlLoader.getController();
             controller.setLoggedInUser(getLoggedInUser());
-            window.setScene(ModifyPartScene);
+            window.setScene(managmentScene);
             window.show();
         }
         catch (Exception ex)
