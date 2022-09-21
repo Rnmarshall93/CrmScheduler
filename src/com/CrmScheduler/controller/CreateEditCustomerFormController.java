@@ -65,7 +65,7 @@ public class CreateEditCustomerFormController {
     /**
      * keeps track of the customer being edited if there is one.
      */
-    public DetailedCustomer existingCustomer;
+    private DetailedCustomer existingCustomer;
 
     /**
      * keeps track of the logged in user obtained from the login form. gets passed around the application.
