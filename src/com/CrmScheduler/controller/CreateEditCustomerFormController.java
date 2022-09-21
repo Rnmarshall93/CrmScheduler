@@ -6,10 +6,7 @@ import com.CrmScheduler.DAO.ICustomerDao;
 import com.CrmScheduler.DAO.IFirstLevelDivisionsDao;
 import com.CrmScheduler.HelperUtilties.TimeTools;
 import com.CrmScheduler.SpringConf;
-import com.CrmScheduler.entity.Country;
-import com.CrmScheduler.entity.CrmUser;
-import com.CrmScheduler.entity.Customer;
-import com.CrmScheduler.entity.FirstLevelDivision;
+import com.CrmScheduler.entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -68,7 +65,7 @@ public class CreateEditCustomerFormController {
     /**
      * keeps track of the customer being edited if there is one.
      */
-    public Customer existingCustomer;
+    public DetailedCustomer existingCustomer;
 
     /**
      * keeps track of the logged in user obtained from the login form. gets passed around the application.
@@ -151,7 +148,7 @@ public class CreateEditCustomerFormController {
      * getter for the existing customer
      * @return returns the existing customer
      */
-    public Customer getExistingCustomer() {
+    public DetailedCustomer getExistingCustomer() {
         return existingCustomer;
     }
 
@@ -159,7 +156,7 @@ public class CreateEditCustomerFormController {
      * setter the existing customer.
      * @param existingCustomer the existingCustomer to set the value to.
      */
-    public void setExistingCustomer(Customer existingCustomer) {
+    public void setExistingCustomer(DetailedCustomer existingCustomer) {
         this.existingCustomer = existingCustomer;
     }
 
@@ -189,14 +186,14 @@ public class CreateEditCustomerFormController {
      * populates the form with the existing customer and sets combobox values as well.
      * @param existingCustomer the existing customer carried over from the customer manager form.
      */
-    public void setupExistingCustomer(Customer existingCustomer)
+    public void setupExistingCustomer(DetailedCustomer existingCustomer)
     {
         inputCustomerId.setText(String.valueOf(existingCustomer.getCustomerId()));
         inputName.setText((existingCustomer.getCustomerName()));
         inputAddress.setText(existingCustomer.getAddress());
         inputPostalCode.setText(existingCustomer.getPostalCode());
         inputPhone.setText(existingCustomer.getPhone());
-        inputDivisionId.setText((String.valueOf(existingCustomer.getFirstLevelDivision().getDivisionId())));
+        inputDivisionId.setText((String.valueOf(existingCustomer.getCustomerId())));
 
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConf.class);
         ICountriesDao iCountriesDao = context.getBean(ICountriesDao.class);
@@ -204,13 +201,13 @@ public class CreateEditCustomerFormController {
 
         context.close();
 
-        FirstLevelDivision fld = existingCustomer.getFirstLevelDivision();
-        inputDivision.getSelectionModel().select(fld.getDivision());
+        existingCustomer.setFirstLevelDivision(iFirstLevelDivisionsDao.getFirstLevelDivision(existingCustomer.getDivisionId()));
+        inputDivision.getSelectionModel().select(existingCustomer.getFirstLevelDivision().getDivision());
         Country existingCountry = iCountriesDao.getAllCountries().stream().filter(country ->  country.getCountryId() == existingCustomer.getFirstLevelDivision().getCountry().getCountryId()).findFirst().orElse(null);
         inputCountry.getSelectionModel().select(existingCountry.getCountry());
-        ObservableList<FirstLevelDivision> matchingDivisions = FXCollections.observableArrayList();
+
         ObservableList<String> divisionNames = FXCollections.observableArrayList();
-        matchingDivisions.forEach(firstLevelDivision -> divisionNames.add(firstLevelDivision.getDivision()));
+        iFirstLevelDivisionsDao.getFirstLevelDivisionsInCountry(existingCountry.getCountryId()).forEach(firstLevelDivision -> divisionNames.add(firstLevelDivision.getDivision()));
         inputDivision.setItems(divisionNames);
         this.setExistingCustomer(existingCustomer);
     }
