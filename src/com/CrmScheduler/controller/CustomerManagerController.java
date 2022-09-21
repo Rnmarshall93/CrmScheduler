@@ -223,7 +223,7 @@ public class CustomerManagerController {
     {
         try
         {
-            Customer customer = (Customer) tableCustomers.getSelectionModel().getSelectedItem();
+            DetailedCustomer customer = (DetailedCustomer) tableCustomers.getSelectionModel().getSelectedItem();
             if (customer != null) {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/CreateEditCustomerForm.fxml"));
                 Parent addEditCustomerWindow = fxmlLoader.load();
@@ -241,6 +241,10 @@ public class CustomerManagerController {
         }
         catch (Exception ex)
         {
+
+            System.out.println(ex.getStackTrace());
+
+            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
             alert.showAndWait();
         }
