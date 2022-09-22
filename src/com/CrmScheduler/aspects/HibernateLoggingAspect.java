@@ -19,8 +19,6 @@ public class HibernateLoggingAspect {
         long endTime = Instant.now().toEpochMilli();
         long timeElapsed = endTime - startTime;
 
-        System.out.println("Time elapsed for " + proceedingJoinPoint.getSignature().toLongString() + "(in Millisec) : " + timeElapsed);
-
         DbLog dbLog = new DbLog();
         dbLog.setMethodSignature(proceedingJoinPoint.getSignature().toLongString());
         if(result == null)

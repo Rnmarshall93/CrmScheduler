@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import com.CrmScheduler.entity.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -126,37 +127,37 @@ public class CustomerManagerController {
      */
     public void buildTable(ObservableList<DetailedCustomer> detailedCustomers) {
         columnCustomerId.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, Integer>("customerId")
+                new PropertyValueFactory<Customer, Integer>("customerId")
         );
         columnName.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("customerName")
+                new PropertyValueFactory<Customer, String>("customerName")
         );
         columnAddress.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("address")
+                new PropertyValueFactory<Customer, String>("address")
         );
         columnPostalCode.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("postalCode")
+                new PropertyValueFactory<Customer, String>("postalCode")
         );
         columnPhone.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("phone")
+                new PropertyValueFactory<Customer, String>("phone")
         );
         columnCreated.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, Date>("createDate")
+                new PropertyValueFactory<Customer, Date>("createDate")
         );
         columnCreatedBy.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("createdBy")
+                new PropertyValueFactory<Customer, String>("createdBy")
         );
         columnLastUpdated.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, Date>("lastUpdate")
+                new PropertyValueFactory<Customer, Date>("lastUpdate")
         );
         columnLastUpdatedBy.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("lastUpdatedBy")
+                new PropertyValueFactory<Customer, String>("lastUpdatedBy")
         );
         columnDivisionId.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("divisionId")
+                new PropertyValueFactory<Customer, String>("divisionId")
         );
         columnDivision.setCellValueFactory(
-                new PropertyValueFactory<DetailedCustomer, String>("division")
+                new PropertyValueFactory<Customer, String>("division")
         );
         tableCustomers.setItems(detailedCustomers);
     }
@@ -241,9 +242,6 @@ public class CustomerManagerController {
         }
         catch (Exception ex)
         {
-
-            System.out.println(ex.getStackTrace());
-
             ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR, ex.getMessage(), ButtonType.OK);
             alert.showAndWait();
