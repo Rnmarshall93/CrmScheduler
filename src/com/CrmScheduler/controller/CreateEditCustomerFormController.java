@@ -160,6 +160,7 @@ public class CreateEditCustomerFormController {
         this.existingCustomer = existingCustomer;
     }
 
+
     /**
      * Returns to the Customer Management form
      */
@@ -236,7 +237,6 @@ public class CreateEditCustomerFormController {
     {
         Stage openWindow = (Stage) Stage.getWindows().stream().filter((window) -> window.isShowing()).findFirst().get();
         setupCountryComboboxSource();
-        openWindow.setTitle("Add/Edit Customer");
     }
 
 
