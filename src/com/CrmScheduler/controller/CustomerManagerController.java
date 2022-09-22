@@ -206,6 +206,7 @@ public class CustomerManagerController {
             CreateEditCustomerFormController controller = fxmlLoader.getController();
             controller.setLoggedInUser(getLoggedInUser());
             window.setScene(addEditCustomerScene);
+            window.setTitle("New Customer");
             window.show();
         }
 
@@ -233,7 +234,9 @@ public class CustomerManagerController {
                 CreateEditCustomerFormController controller = fxmlLoader.getController();
                 controller.setLoggedInUser(getLoggedInUser());
                 controller.setupExistingCustomer(customer);
+
                 window.setScene(addEditCustomerScene);
+                window.setTitle("Edit customer");
                 window.show();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a Customer to edit or create one if there aren't any.", ButtonType.OK);
